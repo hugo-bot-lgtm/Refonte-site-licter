@@ -497,10 +497,10 @@ sel.addEventListener('change', () => {
 /* ↓ pour la collecte réelle : renseigner un endpoint Formspree (https://formspree.io/f/xxxx) ou équivalent */
 const ENDPOINT = '';
 const RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-function send(email, source, cb){
+function send(email, source, extra, cb){
   if(ENDPOINT){
     fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body: JSON.stringify({email, source, page: location.pathname})
+      body: JSON.stringify({email, source, extra, page: location.pathname})
     }).then(() => cb()).catch(() => cb());
   } else setTimeout(cb, 600); /* mode démo */
 }
@@ -511,7 +511,8 @@ document.querySelectorAll('.lead-form').forEach(form => {
     if(!RX.test(input.value.trim())){ form.classList.add('err'); input.focus(); return; }
     form.classList.remove('err');
     btn.disabled = true; btn.textContent = 'Envoi…';
-    send(input.value.trim(), form.dataset.source || 'site', () => {
+    send(input.value.trim(), form.dataset.source || 'site', form.dataset.extra || '', () => {
+      try { sessionStorage.setItem('licter_lead', '1'); } catch(e){}
       form.style.display = 'none';
       const ok = form.parentElement.querySelector('.lead-ok');
       if(ok) ok.style.display = 'block';
@@ -541,4 +542,69 @@ if(back){
   back.querySelector('.close').addEventListener('click', close);
   addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
 }
+})();
+
+/* ================= MINI-AUDIT INSTANTANÉ ================= */
+(function(){
+"use strict";
+const input = document.getElementById('audit-input');
+if(!input) return;
+const btn = document.getElementById('audit-btn');
+const res = document.getElementById('audit-res');
+const nom = document.getElementById('audit-nom');
+const vMentions = res.querySelector('[data-v="mentions"]');
+const vSent = res.querySelector('[data-v="sent"]');
+const vVis = res.querySelector('[data-v="vis"]');
+const bSent = res.querySelector('[data-b="sent"]');
+const bVis = res.querySelector('[data-b="vis"]');
+const form = res.querySelector('.lead-form');
+
+function hash(s){ let h = 7; for(const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; }
+function tweenNum(el, to, fmt){
+  const t0 = performance.now(), dur = 1100;
+  (function tick(t){
+    const p = Math.min((t - t0)/dur, 1), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(Math.round(to * e));
+    if(p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+function go(){
+  const marque = input.value.trim();
+  if(marque.length < 2){ input.focus(); return; }
+  const h = hash(marque.toLowerCase());
+  const mentions = 2400 + h % 78000;          /* simulation stable par marque */
+  const sent = 38 + h % 38;                   /* 38–75 % */
+  const vis = 42 + (h >> 3) % 49;             /* 42–90 /100 */
+  nom.textContent = marque;
+  form.dataset.extra = 'marque : ' + marque;
+  res.classList.add('on');
+  tweenNum(vMentions, mentions, n => n.toLocaleString('fr-FR'));
+  tweenNum(vSent, sent, n => n + ' %');
+  tweenNum(vVis, vis, n => n + ' /100');
+  bSent.style.width = sent + '%';
+  bVis.style.width = vis + '%';
+  res.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+btn.addEventListener('click', go);
+input.addEventListener('keydown', e => { if(e.key === 'Enter') go(); });
+})();
+
+/* ================= EXIT-INTENT (1 fois par session) ================= */
+(function(){
+"use strict";
+const modal = document.getElementById('modal-exit');
+if(!modal) return;
+if(matchMedia('(pointer:coarse)').matches) return; /* desktop uniquement */
+let armed = false;
+setTimeout(() => armed = true, 12000); /* ne s'arme qu'après 12 s sur la page */
+function seen(){ try { return sessionStorage.getItem('licter_exit') || sessionStorage.getItem('licter_lead'); } catch(e){ return true; } }
+function close(){ modal.classList.remove('open'); }
+document.addEventListener('mouseout', e => {
+  if(!armed || e.relatedTarget || e.clientY > 0 || seen()) return;
+  try { sessionStorage.setItem('licter_exit', '1'); } catch(e){}
+  modal.classList.add('open');
+});
+modal.addEventListener('click', e => { if(e.target === modal) close(); });
+modal.querySelector('.close').addEventListener('click', close);
+addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
 })();

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=1783002261">
+<link rel="stylesheet" href="assets/css/style.css?v=1783002772">
 </head>
 <body>
 <div id="progress"></div>
@@ -90,12 +90,31 @@
     </div>
   </div>
 </section>
-<footer>
+
+<div class="modal-back" id="modal-exit" role="dialog" aria-modal="true" aria-labelledby="exit-titre">
+  <div class="modal">
+    <button class="close" aria-label="Fermer">✕</button>
+    <span class="modal-cat">Avant de partir…</span>
+    <h3 id="exit-titre">Repartez avec l'analyse gratuite de votre marque</h3>
+    <p>Indiquez votre email : un consultant vous envoie une première analyse social data sous 24 h. Sans engagement.</p>
+    <form class="lead-form" data-source="exit-intent" novalidate>
+      <input type="email" placeholder="Votre email professionnel" aria-label="Votre email professionnel" required>
+      <button type="submit">Recevoir mon analyse</button>
+    </form>
+    <p class="lead-ok">✓ C'est noté ! À très vite.</p>
+    <p class="lead-note">En envoyant votre email, vous acceptez d'être recontacté par Licter — désinscription en un clic.</p>
+  </div>
+</div><footer>
   <div class="wrap">
     <div class="foot-grid">
       <div>
         <div class="brand" style="margin-bottom:20px"><img src="assets/img/logo-blanc.png" alt="Licter" style="height:64px;width:64px"></div>
         <p style="font-size:.88rem;color:var(--ivoire-60);max-width:34ch">Cabinet de conseil en Social Data Intelligence. La NewsLicter : un e-mail par mois, zéro spam.</p>
+        <form class="lead-form mini" data-source="newsletter-footer" novalidate style="margin-top:18px;max-width:320px">
+          <input type="email" placeholder="Votre email pro" aria-label="Votre email professionnel" required>
+          <button type="submit">S'abonner</button>
+        </form>
+        <p class="lead-ok">✓ Bienvenue dans la NewsLicter !</p>
       </div>
       <div><h4>Explorer</h4><ul><li><a href="use-cases.html">Use cases</a></li><li><a href="technologies.html">Technologies</a></li><li><a href="clients.html">Clients</a></li><li><a href="offres.html">Offres</a></li></ul></div>
       <div><h4>Licter</h4><ul><li><a href="equipe.html">Qui sommes-nous ?</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Nous rencontrer</a></li></ul></div>
@@ -107,6 +126,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/main.js?v=1783002261"></script>
+<script src="assets/js/main.js?v=1783002772"></script>
 </body>
 </html>
