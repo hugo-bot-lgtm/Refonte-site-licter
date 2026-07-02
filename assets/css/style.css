@@ -601,3 +601,47 @@ nav.scrolled{background:rgba(255,255,255,.88)}
 .hero-vignette{background:
   linear-gradient(to right, rgba(255,255,255,.9) 6%, transparent 44%),
   linear-gradient(to bottom, rgba(255,255,255,.35), transparent 25%, transparent 62%, #FFFFFF 96%)}
+
+/* ============ BLOCS SOMBRES SUR FOND BLANC ============ */
+/* chaque bloc sombre redéfinit ses variables de texte : tout l'intérieur passe en ivoire */
+.case,.offre,.stat,.article,.membre,.map-frame,.feed,.coord,.acard,.audit-cta,
+.dash,.dkpi,.dash-chart,.dash-src,.dash-cta,.tech,.compare,.submenu-inner,.modal,footer,#tooltip{
+  --ivoire:#F4F1E8;
+  --ivoire-60:rgba(244,241,232,.74);
+  --ivoire-35:rgba(244,241,232,.5);
+  color:var(--ivoire);
+}
+.case{background:linear-gradient(160deg,#171B36 0%,#10132A 100%);box-shadow:0 16px 40px rgba(19,22,45,.16)}
+.offre{background:linear-gradient(150deg,#171B36,#0F1226);box-shadow:0 16px 40px rgba(19,22,45,.14)}
+.offre li{border-color:rgba(244,241,232,.09)}
+.stat{background:#13162D}
+.article{background:#13162D}
+.membre{background:#13162D}
+.membre .photo{background:linear-gradient(160deg,#1B2040,#0D1022)}
+.membre .id{border-color:rgba(244,241,232,.09)}
+.map-frame,.feed{background:#13162D}
+.mention{background:rgba(255,255,255,.05);border-color:rgba(244,241,232,.1)}
+.coord{background:#13162D}
+.coord .ligne-c{border-color:rgba(244,241,232,.09)}
+.acard{background:#13162D}
+.acard .jauge{background:rgba(244,241,232,.12)}
+.audit-cta{background:linear-gradient(120deg,rgba(190,167,107,.16),#13162D)}
+.dash{background:#12152C;box-shadow:0 40px 90px rgba(19,22,45,.28)}
+.dkpi{background:#171B36}
+.dash-chart,.dash-src{background:#171B36;border-color:rgba(244,241,232,.08)}
+.dash-src .src div{background:rgba(244,241,232,.12)}
+.dash-bar .dots i{background:rgba(244,241,232,.16)}
+.dash-cta{background:linear-gradient(120deg,rgba(190,167,107,.15),#13162D)}
+.tech{background:#13162D}
+.tech:hover{background:#171B36}
+.compare{background:#13162D}
+.compare th{background:#171B36}
+.compare th,.compare td{border-color:rgba(244,241,232,.08)}
+.submenu-inner{background:#13162D}
+.modal{background:#13162D}
+footer{background:#0F1226}
+.foot-bottom{border-color:rgba(244,241,232,.1)}
+#tooltip{background:#0D1022}
+.uc-detail .case .kpi{border-color:rgba(244,241,232,.1)}
+/* les formulaires de capture restent clairs, même dans un bloc sombre */
+.lead-form{--ivoire:#13162D;--ivoire-35:rgba(19,22,45,.46);background:#FFFFFF;color:#13162D}
