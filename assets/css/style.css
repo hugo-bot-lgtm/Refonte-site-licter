@@ -404,3 +404,31 @@ footer{border-top:1px solid var(--ligne);padding:64px 0 40px;background:var(--bl
 .dash.in .src i{width:var(--w)}
 @media(max-width:820px){.dash-main,.dash-kpis{grid-template-columns:1fr}.dash-wrap{margin-top:-10vh}}
 @media(prefers-reduced-motion:reduce){.dash-chart .line{stroke-dashoffset:0}.dash-chart .area{opacity:1}.dash .src i{width:var(--w)}}
+
+/* ---------- retours équipe : angles arrondis ---------- */
+:root{--r:14px}
+.btn{border-radius:10px}
+.case,.offre,.video,.membre,.article,.map-frame,.feed,.coord,.compare,.tech-grid{border-radius:var(--r);overflow:hidden}
+.chiffres,.hero-stats,.dash-kpis{border-radius:var(--r);overflow:hidden}
+.mention,#tooltip,.champ input,.champ textarea,.champ select,#form-ok{border-radius:10px}
+.dash{border-radius:16px;overflow:hidden}
+.dash-chart,.dash-src{border-radius:12px}
+.offre .tag,.video .duree,.filtres button{border-radius:100px}
+.qa button{border-radius:10px}
+
+/* ---------- menus déroulants au survol ---------- */
+.nav-links li{position:relative}
+.submenu{position:absolute;top:100%;left:50%;transform:translate(-50%,16px);padding-top:16px;
+  opacity:0;pointer-events:none;transition:opacity .3s cubic-bezier(.19,1,.22,1),transform .3s cubic-bezier(.19,1,.22,1);z-index:60}
+.nav-links li:hover>.submenu,.nav-links li:focus-within>.submenu{opacity:1;pointer-events:auto;transform:translate(-50%,6px)}
+.submenu-inner{background:var(--bleu);border:1px solid var(--ligne);border-radius:14px;min-width:330px;padding:12px;
+  box-shadow:0 30px 70px rgba(0,0,0,.65)}
+.submenu-inner a{display:block;padding:13px 16px;border-radius:10px;transition:background .25s}
+.submenu-inner a::after{display:none}
+.submenu-inner a b{display:block;font-weight:600;font-size:.84rem;letter-spacing:.04em;text-transform:none;color:var(--ivoire);margin-bottom:3px}
+.submenu-inner a small{display:block;font-size:.78rem;letter-spacing:0;text-transform:none;color:var(--ivoire-35);line-height:1.45}
+.submenu-inner a:hover{background:rgba(190,167,107,.09)}
+.submenu-inner a:hover b{color:var(--or)}
+.submenu-inner .tout{border-top:1px solid rgba(244,241,232,.08);margin-top:8px}
+.submenu-inner .tout b{color:var(--or);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase}
+@media(max-width:720px){.submenu{display:none}}

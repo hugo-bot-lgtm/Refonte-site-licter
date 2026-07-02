@@ -64,12 +64,12 @@ if(canvas){
   function resize(){
     W = canvas.width = canvas.offsetWidth * devicePixelRatio;
     H = canvas.height = canvas.offsetHeight * devicePixelRatio;
-    const n = Math.min(110, Math.floor(canvas.offsetWidth / 12));
+    const n = Math.min(130, Math.floor(canvas.offsetWidth / 10));
     pts = Array.from({length:n}, () => ({
       x: Math.random()*W, y: Math.random()*H,
       vx: (Math.random()-.5)*.22*devicePixelRatio,
       vy: (Math.random()-.5)*.22*devicePixelRatio,
-      r: (Math.random()*1.8+.8)*devicePixelRatio,
+      r: (Math.random()*2.2+1.2)*devicePixelRatio,
       gold: Math.random() < .28
     }));
   }
@@ -91,14 +91,14 @@ if(canvas){
       if(dm < 180*devicePixelRatio){ p.x += (p.x - mouse.x)/dm * .6; p.y += (p.y - mouse.y)/dm * .6; }
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, 7);
-      ctx.fillStyle = p.gold ? 'rgba(190,167,107,.85)' : 'rgba(244,241,232,.4)';
+      ctx.fillStyle = p.gold ? 'rgba(190,167,107,1)' : 'rgba(244,241,232,.75)';
       ctx.fill();
     }
     for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
       const a = pts[i], b = pts[j], d = Math.hypot(a.x-b.x, a.y-b.y);
       if(d < LINK){
-        ctx.strokeStyle = (a.gold && b.gold) ? `rgba(190,167,107,${.35*(1-d/LINK)})` : `rgba(244,241,232,${.12*(1-d/LINK)})`;
-        ctx.lineWidth = devicePixelRatio*.6;
+        ctx.strokeStyle = (a.gold && b.gold) ? `rgba(190,167,107,${.55*(1-d/LINK)})` : `rgba(244,241,232,${.25*(1-d/LINK)})`;
+        ctx.lineWidth = devicePixelRatio*.8;
         ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
       }
     }
@@ -333,8 +333,8 @@ function draw(now){
   for(const p of land){
     const q = proj(p);
     if(q.z < -.25) continue;
-    const a = .06 + .3 * (q.z + 1) / 2;
-    const sz = (q.z > 0 ? 1.5 : 1) * devicePixelRatio * q.s;
+    const a = .12 + .42 * (q.z + 1) / 2;
+    const sz = (q.z > 0 ? 2 : 1.3) * devicePixelRatio * q.s;
     ctx.fillStyle = `rgba(244,241,232,${a})`;
     ctx.fillRect(q.sx, q.sy, sz, sz);
   }
@@ -352,7 +352,7 @@ function draw(now){
       if(q.z > 0) visible = true;
     }
     if(!visible) return;
-    ctx.strokeStyle = 'rgba(190,167,107,.28)';
+    ctx.strokeStyle = 'rgba(190,167,107,.42)';
     ctx.lineWidth = devicePixelRatio;
     ctx.stroke();
     /* paquet de données voyageant sur l'arc */
