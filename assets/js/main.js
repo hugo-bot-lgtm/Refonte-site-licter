@@ -298,8 +298,8 @@ let W, H, R, CX, CY, rotY = .6, vel = .0018, drag = false, lastX = 0, mx = 0;
 function resize(){
   W = cv.width = cv.offsetWidth * devicePixelRatio;
   H = cv.height = cv.offsetHeight * devicePixelRatio;
-  R = Math.min(W, H) * .38;
-  CX = W * (cv.offsetWidth > 860 ? .68 : .5);
+  R = Math.min(W, H) * .44;
+  CX = W * (cv.offsetWidth > 860 ? .72 : .5);
   CY = H * .5;
 }
 resize(); addEventListener('resize', resize);
