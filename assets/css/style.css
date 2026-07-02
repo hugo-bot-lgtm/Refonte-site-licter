@@ -432,3 +432,7 @@ footer{border-top:1px solid var(--ligne);padding:64px 0 40px;background:var(--bl
 .submenu-inner .tout{border-top:1px solid rgba(244,241,232,.08);margin-top:8px}
 .submenu-inner .tout b{color:var(--or);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase}
 @media(max-width:720px){.submenu{display:none}}
+
+/* ---------- fix : dashboard ne chevauche plus le hero ---------- */
+.dash-wrap{margin-top:0;padding-top:60px;padding-bottom:100px;background:#000;position:relative;z-index:6}
+#hero{z-index:1}
