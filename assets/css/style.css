@@ -457,3 +457,26 @@ footer{border-top:1px solid var(--ligne);padding:64px 0 40px;background:var(--bl
   #hero .hero-content>*{max-width:560px}
   #hero h1{max-width:12ch}
 }
+
+/* ---------- éclaircissement global (retour équipe) ---------- */
+:root{
+  --noir:#0D1022;                      /* fond : noir bleuté, plus du noir pur */
+  --nuit:#151936;
+  --bleu:#1C2140;                      /* surfaces éclaircies */
+  --bleu-2:#272D52;
+  --ligne:rgba(190,167,107,.3);        /* filets dorés plus présents */
+  --ivoire-60:rgba(244,241,232,.74);   /* textes secondaires plus lisibles */
+  --ivoire-35:rgba(244,241,232,.48);
+}
+nav.scrolled{background:rgba(28,33,64,.85)}
+.nav-links{--m:1}
+.stat{background:rgba(40,46,86,.55)}
+.case{background:linear-gradient(160deg,rgba(40,46,86,.55) 0%,rgba(40,46,86,.18) 100%)}
+.offre{background:linear-gradient(150deg,rgba(21,25,54,.9),rgba(39,45,82,.5))}
+.mention{background:rgba(21,25,54,.65)}
+.dash{background:rgba(24,29,60,.94)}
+.dash-chart,.dash-src{background:rgba(40,46,86,.5)}
+.dash-wrap{background:var(--noir)}
+.hero-vignette{background:
+  linear-gradient(to right, rgba(13,16,34,.6), transparent 26%, transparent 74%, rgba(13,16,34,.6)),
+  linear-gradient(to bottom, rgba(13,16,34,.3), transparent 28%, transparent 55%, var(--noir) 97%)}
