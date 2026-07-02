@@ -675,3 +675,7 @@ footer{background:#0F1226}
 .dash-deco .ring-deco i{position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--or)}
 @keyframes spin-deco{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.dash-deco .ring-deco{animation:none}}
+
+/* ---------- fix : le clipping ne s'applique qu'au décor, plus au panneau ---------- */
+.dash-wrap{overflow:visible}
+.dash-deco{overflow:hidden}

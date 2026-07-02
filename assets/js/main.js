@@ -404,7 +404,7 @@ addEventListener('scroll', () => {
       fade.style.transform = `translateY(${y * .18}px)`;
     }
     if(dash){
-      dash.style.transform = `translateY(${-Math.min(y, 700) * .16}px)`;
+      dash.style.transform = `translateY(${-Math.min(y, 420) * .09}px)`;
     }
   });
 }, {passive:true});
