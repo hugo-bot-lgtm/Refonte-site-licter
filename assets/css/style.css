@@ -653,3 +653,7 @@ footer{background:#0F1226}
 .audit-cta{background:
   linear-gradient(120deg,rgba(190,167,107,.16),rgba(190,167,107,0) 45%),
   linear-gradient(120deg,#171B36,#0F1226)}
+
+/* ---------- fix : sélecteur du dashboard (texte blanc sur fond clair) ---------- */
+.dash-select{background-color:#171B36;color:#F4F1E8;border-color:rgba(190,167,107,.45)}
+.dash-select option{background:#171B36;color:#F4F1E8}
