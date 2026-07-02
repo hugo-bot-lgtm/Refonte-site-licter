@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Licter — Social Data Intelligence</title>
+<meta name="description" content="Licter, cabinet de conseil en Social Data Intelligence. La data du plus grand panel du monde : les réseaux sociaux.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="progress"></div>
+<div id="halo"></div>
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo-blanc.png" alt="Licter — accueil">
+    </a>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="use-cases.html">Use cases</a></li>
+      <li><a href="technologies.html">Technologies</a></li>
+      <li><a href="clients.html">Clients</a></li>
+      <li><a href="offres.html">Offres</a></li>
+      <li><a href="equipe.html">Équipe</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html" class="btn" style="padding:12px 22px">Nous rencontrer</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+  </div>
+</nav>
+<!-- ============ HERO ============ -->
+<header id="hero">
+  <canvas id="constellation" aria-hidden="true"></canvas>
+  <div class="wrap hero-content">
+    <div class="hero-badge"><i></i> Top 50 mondial · Social Intelligence Insider</div>
+    <h1>
+      <span class="h1-line"><span>La data du</span></span>
+      <span class="h1-line"><span><em class="gold" style="font-style:normal">plus grand panel</em></span></span>
+      <span class="h1-line"><span>du monde.</span></span>
+    </h1>
+    <p class="hero-sub">Licter est le cabinet de conseil en Social Data Intelligence qui transforme les conversations du web et des réseaux sociaux en décisions : veille, social listening, consumer insights.</p>
+    <div class="hero-ctas">
+      <a href="offres.html" class="btn plein">Découvrir nos offres</a>
+      <a href="#carte" class="btn">Voir la data en direct</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><b data-count="50" data-suffix="+">0</b><small>clients accompagnés</small></div>
+      <div class="stat"><b data-count="3" data-suffix=" Mds">0</b><small>de voix analysées</small></div>
+      <div class="stat"><b data-count="20" data-suffix="+">0</b><small>langues couvertes</small></div>
+      <div class="stat"><b data-count="15" data-suffix=" min">0</b><small>pour vous alerter, 24/7</small></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Défiler</div>
+</header>
+
+<!-- ============ MARQUEE CLIENTS ============ -->
+<div class="marquee" aria-label="Ils nous font confiance">
+  <div class="marquee-track" id="mq1">
+    <span>HP</span><span>◆</span><span>La Poste</span><span>◆</span><span>Decathlon</span><span>◆</span><span>Société Générale</span><span>◆</span><span>L'Oréal</span><span>◆</span><span>Danone</span><span>◆</span><span>CentraleSupélec</span><span>◆</span><span><em>50+ entreprises nous font confiance</em></span><span>◆</span>
+  </div>
+</div>
+
+<!-- ============ USE CASES ============ -->
+<section class="section" id="usecases">
+  <div class="wrap">
+    <div class="eyebrow rv">Nos use cases</div>
+    <h2 class="rv d1">Chaque question business<br>a sa <span class="gold">réponse data</span>.</h2>
+    <div class="grid-3">
+      <div class="case rv"><span class="num">Performance</span><span class="fl">↗</span><h3>Social Performance</h3><p>Mesurez l'impact réel de vos prises de parole et campagnes, et pilotez le ROI de vos actions sociales.</p></div>
+      <div class="case rv d1"><span class="num">Marché</span><span class="fl">↗</span><h3>Consumer Intelligence</h3><p>Comprenez ce qui motive et séduit vos cibles à travers leurs conversations spontanées.</p></div>
+      <div class="case rv d2"><span class="num">Écoute</span><span class="fl">↗</span><h3>Social Listening</h3><p>Analysez contenus, sentiments et interactions pour capter les signaux faibles avant vos concurrents.</p></div>
+      <div class="case rv"><span class="num">Protection</span><span class="fl">↗</span><h3>Veille 24/24</h3><p>Gardez un temps d'avance sur le tempo médiatique et protégez votre réputation en continu.</p></div>
+      <div class="case rv d1"><span class="num">Produit</span><span class="fl">↗</span><h3>Innovation Produit</h3><p>Détectez les besoins émergents et testez vos concepts auprès du plus grand panel du monde.</p></div>
+      <div class="case rv d2"><span class="num">Influence</span><span class="fl">↗</span><h3>Influenceurs</h3><p>Identifiez les voix qui comptent vraiment pour votre marque, au-delà des chiffres de followers.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECHNOLOGIES ============ -->
+<section class="section" id="techno">
+  <div class="wrap">
+    <div class="eyebrow rv">Nos technologies</div>
+    <h2 class="rv d1">Des algorithmes propriétaires,<br>des <span class="gold">experts</span> aux commandes.</h2>
+    <p class="lead rv d2" style="margin-top:26px">Nous combinons la puissance de nos algorithmes, les meilleurs outils du marché et l'exigence de consultants en social data.</p>
+    <div class="tech-grid rv d2">
+      <div class="tech"><span class="q">Quoi ?</span><h3>Social Listening</h3><p>Analyse des conversations numériques : contenus, sentiments, interactions.</p></div>
+      <div class="tech"><span class="q">Qui ?</span><h3>Audience Intelligence</h3><p>Identification des traits qui rendent une audience unique et connectée.</p></div>
+      <div class="tech"><span class="q">Pourquoi ?</span><h3>Digital Panel</h3><p>Les opinions de près de 3 milliards de consommateurs, au prisme global et local.</p></div>
+      <div class="tech"><span class="q">Comment ?</span><h3>Search Listening</h3><p>Les données de recherche (Google, Amazon…) pour saisir les vrais besoins.</p></div>
+    </div>
+    <div class="pipeline rv d3">
+      <svg viewBox="0 0 1200 70" preserveAspectRatio="none">
+        <line x1="0" y1="35" x2="1200" y2="35" stroke="rgba(190,167,107,.25)" stroke-width="1"/>
+        <circle class="pip" r="4" fill="#BEA76B"><animateMotion dur="6s" repeatCount="indefinite" path="M0,35 L1200,35"/></circle>
+        <circle class="pip" r="3" fill="#DCC98F" opacity=".7"><animateMotion dur="6s" begin="2s" repeatCount="indefinite" path="M0,35 L1200,35"/></circle>
+        <circle class="pip" r="2.5" fill="#F4F1E8" opacity=".5"><animateMotion dur="6s" begin="4s" repeatCount="indefinite" path="M0,35 L1200,35"/></circle>
+        <text x="0" y="16" fill="rgba(244,241,232,.35)" font-size="10" letter-spacing="3">DATA BRUTE</text>
+        <text x="1200" y="16" fill="#BEA76B" font-size="10" letter-spacing="3" text-anchor="end">DÉCISION</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARTE INTERACTIVE ============ -->
+<section class="section" id="carte">
+  <div class="wrap">
+    <div class="eyebrow rv">Veille mondiale · VIGIE360</div>
+    <h2 class="rv d1">Une veille qui<br><span class="gold">ne dort jamais</span>.</h2>
+    <p class="lead rv d2" style="margin-top:26px">20+ langues, tous les fuseaux, une alerte en 15 minutes. Survolez la carte : chaque point est une conversation qui compte.</p>
+    <div class="split">
+      <div class="map-frame rv d2">
+        <canvas id="dotmap"></canvas>
+        <div id="tooltip"></div>
+      </div>
+      <aside class="feed rv d3" aria-label="Flux de veille simulé">
+        <div class="feed-head"><i></i> Flux de mentions — démo</div>
+        <div id="feed-list"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OFFRES ============ -->
+<section class="section" id="offres">
+  <div class="wrap">
+    <div class="eyebrow rv">Nos offres</div>
+    <h2 class="rv d1">Deux offres, <span class="gold">zéro surprise</span>.</h2>
+    <div class="offres-grid">
+      <div class="offre rv d1">
+        <span class="tag">Études & Insights</span>
+        <h3>Social Insights</h3>
+        <p>Vos analyses social data méritent des experts. Nos consultants cadrent, paramètrent et produisent vos études via un modèle 100 % transparent.</p>
+        <ul>
+          <li>Forfait fixe, études illimitées</li>
+          <li>Consultants dédiés à votre secteur</li>
+          <li>Insights actionnables, pas des dashboards vides</li>
+        </ul>
+        <a href="contact.html" class="btn">Tester l'offre</a>
+      </div>
+      <div class="offre rv d2">
+        <span class="tag">Veille & Réputation</span>
+        <h3>Veille VIGIE360</h3>
+        <p>Gardez toujours un temps d'avance sur le tempo médiatique avec une veille qui protège déjà 25+ clients, en continu.</p>
+        <ul>
+          <li>Alerte en 15 minutes, 24/7</li>
+          <li>Couverture 20+ langues, monde entier</li>
+          <li>Cellule de crise activable à tout moment</li>
+        </ul>
+        <a href="contact.html" class="btn">Tester l'offre</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENTS (VIDÉOS) ============ -->
+<section class="section" id="clients">
+  <div class="wrap">
+    <div class="eyebrow rv">Nos clients</div>
+    <h2 class="rv d1">Ils racontent mieux<br>que nous. <span class="gold">En vidéo.</span></h2>
+    <div class="videos">
+      <div class="video rv" role="button" tabindex="0" aria-label="Voir le témoignage HP">
+        <div class="bg v1"></div><span class="duree">02:14</span><span class="play"></span>
+        <div class="vmeta"><small>HP · USA · 2023</small><h3>Segmenter des niches avec 5 000+ critères</h3></div>
+      </div>
+      <div class="video rv d1" role="button" tabindex="0" aria-label="Voir le témoignage La Poste">
+        <div class="bg v2"></div><span class="duree">01:47</span><span class="play"></span>
+        <div class="vmeta"><small>La Poste · France · 2023</small><h3>Calculer le ROI marketing grâce à la social data</h3></div>
+      </div>
+      <div class="video rv d2" role="button" tabindex="0" aria-label="Voir le témoignage secteur luxe">
+        <div class="bg v3"></div><span class="duree">02:32</span><span class="play"></span>
+        <div class="vmeta"><small>Leader mondial du luxe · 2024</small><h3>Veiller la réputation d'une CEO monde, 24/7</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÉQUIPE ============ -->
+<section class="section" id="equipe">
+  <div class="wrap">
+    <div class="eyebrow rv">Qui sommes-nous ?</div>
+    <h2 class="rv d1">L'équipe</h2>
+    <blockquote class="quote rv d2">« Notre vision : remplacer l'intuition par la data du <span class="gold">plus grand panel du monde</span>. »</blockquote>
+    <p class="signature rv d3">Antoine Khaitrine & Adrien Krebs — Co-fondateurs</p>
+    <div class="team">
+      <div class="membre rv"><div class="photo"><svg viewBox="0 0 100 115"><circle cx="50" cy="42" r="18" fill="none" stroke="#BEA76B" stroke-width=".8"/><path d="M20 105 Q50 68 80 105" fill="none" stroke="#BEA76B" stroke-width=".8"/></svg></div><div class="id"><b>Antoine Khaitrine</b><small>Co-fondateur</small></div></div>
+      <div class="membre rv d1"><div class="photo"><svg viewBox="0 0 100 115"><circle cx="50" cy="42" r="18" fill="none" stroke="#BEA76B" stroke-width=".8"/><path d="M20 105 Q50 68 80 105" fill="none" stroke="#BEA76B" stroke-width=".8"/></svg></div><div class="id"><b>Adrien Krebs</b><small>Co-fondateur</small></div></div>
+      <div class="membre rv d2"><div class="photo"><svg viewBox="0 0 100 115"><circle cx="50" cy="42" r="18" fill="none" stroke="#BEA76B" stroke-width=".8"/><path d="M20 105 Q50 68 80 105" fill="none" stroke="#BEA76B" stroke-width=".8"/></svg></div><div class="id"><b>Prénom Nom</b><small>Consultant·e senior</small></div></div>
+      <div class="membre rv d3"><div class="photo"><svg viewBox="0 0 100 115"><circle cx="50" cy="42" r="18" fill="none" stroke="#BEA76B" stroke-width=".8"/><path d="M20 105 Q50 68 80 105" fill="none" stroke="#BEA76B" stroke-width=".8"/></svg></div><div class="id"><b>Prénom Nom</b><small>Data analyst</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BLOG ============ -->
+<section class="section" id="blog">
+  <div class="wrap">
+    <div class="eyebrow rv">Le blog</div>
+    <h2 class="rv d1">Datas qui <span class="gold">piquent</span>,<br>décryptages qui restent.</h2>
+    <div class="articles">
+      <a href="#" class="article rv"><span class="cat">Audience Intelligence</span><h3>Shein vs BHV : dissection d'une crise digitale</h3><span class="auteur">Adrien Krebs</span><span class="lire">Lire l'analyse →</span></a>
+      <a href="#" class="article rv d1"><span class="cat">Social Listening</span><h3>Le bad buzz Huda Beauty décrypté</h3><span class="auteur">Adrien Krebs</span><span class="lire">Lire l'analyse →</span></a>
+      <a href="#" class="article rv d2"><span class="cat">Podcast</span><h3>Surveiller les JO : l'art de la veille de crise</h3><span class="auteur">Antoine Khaitrine</span><span class="lire">Écouter →</span></a>
+      <a href="#" class="article rv d3"><span class="cat">Prospective</span><h3>Départs de X : quels réseaux peuvent rivaliser ?</h3><span class="auteur">Antoine Khaitrine</span><span class="lire">Lire l'analyse →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- marquee mots-clés SEO -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="mq2">
+    <span>Social listening</span><span>◆</span><span>Veille médiatique</span><span>◆</span><span>Consumer insights</span><span>◆</span><span>E-réputation</span><span>◆</span><span>Gestion de crise</span><span>◆</span><span>Audience intelligence</span><span>◆</span><span>Search listening</span><span>◆</span><span>Étude de marché social data</span><span>◆</span>
+  </div>
+</div>
+
+<!-- ============ CTA / CONTACT ============ -->
+<section class="section" id="contact" style="padding:170px 0">
+  <div class="ring r1"><i></i></div>
+  <div class="ring r2"><i></i></div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="eyebrow rv" style="justify-content:center">Nous rencontrer</div>
+    <h2 class="rv d1">Et si on écoutait <span class="gold">votre marché</span> ensemble ?</h2>
+    <p class="lead rv d2">Indiquez-nous une marque : nous vous envoyons une analyse social data automatisée sous 24 h. Sans engagement, sans slide inutile.</p>
+    <div class="rv d3" style="display:flex;gap:18px;justify-content:center;flex-wrap:wrap">
+      <a href="contact.html" class="btn plein">Recevoir mon analyse gratuite</a>
+      <a href="tel:+33636406600" class="btn">+33 (0)6 36 40 66 00</a>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:20px"><img src="assets/img/logo-blanc.png" alt="Licter" style="height:64px;width:64px"></div>
+        <p style="font-size:.88rem;color:var(--ivoire-60);max-width:34ch">Cabinet de conseil en Social Data Intelligence. La NewsLicter : un e-mail par mois, zéro spam.</p>
+      </div>
+      <div><h4>Explorer</h4><ul><li><a href="use-cases.html">Use cases</a></li><li><a href="technologies.html">Technologies</a></li><li><a href="clients.html">Clients</a></li><li><a href="offres.html">Offres</a></li></ul></div>
+      <div><h4>Licter</h4><ul><li><a href="equipe.html">Qui sommes-nous ?</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Nous rencontrer</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="mailto:contact@licter.com">contact@licter.com</a></li><li><a href="tel:+33636406600">+33 (0)6 36 40 66 00</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Licter — Maquette</span>
+      <span>Politique de confidentialité · CGU · Cookies</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

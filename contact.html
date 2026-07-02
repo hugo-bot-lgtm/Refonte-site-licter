@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nous rencontrer — Licter</title>
+<meta name="description" content="Contactez Licter : recevez une analyse social data gratuite de votre marque sous 24 h.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="progress"></div>
+<div id="halo"></div>
+<nav id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo-blanc.png" alt="Licter — accueil">
+    </a>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="use-cases.html">Use cases</a></li>
+      <li><a href="technologies.html">Technologies</a></li>
+      <li><a href="clients.html">Clients</a></li>
+      <li><a href="offres.html">Offres</a></li>
+      <li><a href="equipe.html">Équipe</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html" class="btn" style="padding:12px 22px">Nous rencontrer</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+  </div>
+</nav>
+<header class="page-hero">
+  <canvas id="constellation" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"></canvas>
+  <div class="wrap" style="position:relative;z-index:2">
+    <span class="fil"><a href="index.html">Accueil</a> / Nous rencontrer</span>
+    <div class="eyebrow">Nous rencontrer</div>
+    <h1>Et si on écoutait <span class="gold">votre marché</span> ensemble ?</h1>
+    <p class="lead">Indiquez-nous une marque : nous vous envoyons une analyse social data automatisée sous 24 h. Sans engagement, sans slide inutile.</p>
+  </div>
+</header>
+<section class="section" style="padding-top:20px">
+  <div class="wrap">
+    <div class="form-grid">
+      <form id="form-contact" class="rv">
+        <div class="champ"><label for="f-nom">Nom & prénom</label><input id="f-nom" type="text" placeholder="Camille Dupont"></div>
+        <div class="champ"><label for="f-email">E-mail professionnel</label><input id="f-email" type="email" placeholder="camille@entreprise.com"></div>
+        <div class="champ"><label for="f-marque">La marque à analyser</label><input id="f-marque" type="text" placeholder="Votre marque (ou celle d'un concurrent…)"></div>
+        <div class="champ"><label for="f-sujet">Votre enjeu</label><select id="f-sujet">
+          <option>Étude / insights consommateurs</option>
+          <option>Veille & réputation</option>
+          <option>Gestion de crise</option>
+          <option>Influence</option>
+          <option>Autre</option>
+        </select></div>
+        <div class="champ"><label for="f-msg">Un mot de contexte (optionnel)</label><textarea id="f-msg" placeholder="Lancement produit en mars, marché FR + DE…"></textarea></div>
+        <button class="btn plein" type="submit">Recevoir mon analyse sous 24 h</button>
+        <div id="form-ok">Merci ! Votre demande est bien partie — un consultant vous répond sous 24 h ouvrées. (Formulaire de démonstration : aucun envoi réel.)</div>
+      </form>
+      <aside class="coord rv d1">
+        <h3>Nous joindre</h3>
+        <div class="ligne-c"><span>E-mail</span><a href="mailto:contact@licter.com">contact@licter.com</a></div>
+        <div class="ligne-c"><span>Téléphone</span><a href="tel:+33636406600">+33 (0)6 36 40 66 00</a></div>
+        <div class="ligne-c"><span>Bureaux</span><span>Paris, France</span></div>
+        <div class="ligne-c"><span>Réponse</span><span>Sous 24 h ouvrées</span></div>
+        <div class="ligne-c" style="border-bottom:none"><span>Réseaux</span><span><a href="#">LinkedIn</a> · <a href="#">YouTube</a></span></div>
+        <div style="margin-top:34px;padding-top:30px;border-top:1px solid rgba(244,241,232,.08)">
+          <div class="hero-badge" style="margin-bottom:0"><i></i> Un consultant vous répond, pas un bot</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:20px"><img src="assets/img/logo-blanc.png" alt="Licter" style="height:64px;width:64px"></div>
+        <p style="font-size:.88rem;color:var(--ivoire-60);max-width:34ch">Cabinet de conseil en Social Data Intelligence. La NewsLicter : un e-mail par mois, zéro spam.</p>
+      </div>
+      <div><h4>Explorer</h4><ul><li><a href="use-cases.html">Use cases</a></li><li><a href="technologies.html">Technologies</a></li><li><a href="clients.html">Clients</a></li><li><a href="offres.html">Offres</a></li></ul></div>
+      <div><h4>Licter</h4><ul><li><a href="equipe.html">Qui sommes-nous ?</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Nous rencontrer</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="mailto:contact@licter.com">contact@licter.com</a></li><li><a href="tel:+33636406600">+33 (0)6 36 40 66 00</a></li><li><a href="#">LinkedIn</a></li><li><a href="#">YouTube</a></li></ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Licter — Maquette</span>
+      <span>Politique de confidentialité · CGU · Cookies</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
