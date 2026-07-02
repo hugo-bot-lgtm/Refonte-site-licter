@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=1782995725">
+<link rel="stylesheet" href="assets/css/style.css?v=1783000746">
 </head>
 <body>
 <div id="progress"></div>
@@ -53,7 +53,15 @@
 <section class="dash-wrap" aria-label="Aperçu de l'interface VIGIE360 — démo">
   <div class="wrap">
     <div id="dash-panel" class="dash rv">
-      <div class="dash-bar"><span class="dots"><i></i><i></i><i></i></span><span class="dash-title">VIGIE360 · Salle de veille — démo</span><em class="dash-live">● LIVE</em></div>
+      <div class="dash-bar"><span class="dots"><i></i><i></i><i></i></span><span class="dash-title">VIGIE360 · Salle de veille — démo</span>
+        <select id="dash-select" class="dash-select" aria-label="Choisir une étude Licter">
+          <option value="">Salle de veille — vue générale</option>
+          <option value="shein">Étude LinkedIn · Shein vs BHV</option>
+          <option value="huda">Étude LinkedIn · Bad buzz Huda Beauty</option>
+          <option value="jo">Étude LinkedIn · Veille des JO 2024</option>
+          <option value="x">Étude LinkedIn · Départs de X</option>
+        </select>
+        <em class="dash-live">● LIVE</em></div>
       <div class="dash-body">
         <div class="dash-kpis">
           <div class="dkpi"><small>Mentions / 24 h</small><b data-count="48213">0</b><span class="up">▲ +12 % vs hier</span></div>
@@ -273,7 +281,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/main.js?v=1782995725"></script>
+<script src="assets/js/main.js?v=1783000746"></script>
 </body>
 </html>
-<!-- build: 20260702T124145Z -->

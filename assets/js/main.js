@@ -407,3 +407,84 @@ addEventListener('scroll', () => {
   });
 }, {passive:true});
 })();
+
+/* ================= SÉLECTEUR D'ÉTUDES DU DASHBOARD ================= */
+(function(){
+"use strict";
+const sel = document.getElementById('dash-select');
+if(!sel) return;
+const live = document.querySelector('.dash-live');
+const title = document.querySelector('.dash-title');
+const kpis = document.querySelectorAll('.dkpi b');
+const notes = document.querySelectorAll('.dkpi span');
+const line = document.querySelector('.dash-chart .line');
+const area = document.querySelector('.dash-chart .area');
+const rows = document.querySelectorAll('.dash-src .src');
+
+/* données par étude (démo) */
+const DATA = {
+  '': {t:'VIGIE360 · Salle de veille — démo',
+    k:[[48213,''],[68,' %'],[7,'']],
+    n:[['up','▲ +12 % vs hier'],['up','▲ +4 pts / 7 j'],['','Délai max : 15 min']],
+    curve:[.2,.28,.24,.4,.48,.55,.72,.68],
+    src:[['X / Twitter',78],['TikTok',64],['Presse en ligne',52],['Forums & avis',31]],
+    live:false},
+  shein: {t:'Étude · Shein vs BHV — crise digitale',
+    k:[[132480,''],[22,' %'],[31,'']],
+    n:[['up','▲ +212 % pendant la crise'],['down','▼ -29 pts en 72 h'],['','Pic : 11 alertes / jour']],
+    curve:[.12,.15,.2,.85,.95,.7,.5,.38],
+    src:[['X / Twitter',84],['TikTok',71],['Presse en ligne',66],['Forums & avis',24]],
+    live:true},
+  huda: {t:'Étude · Bad buzz Huda Beauty',
+    k:[[96340,''],[18,' %'],[24,'']],
+    n:[['up','▲ +164 % en 48 h'],['down','▼ -33 pts au pic'],['','Retour au calme : 9 jours']],
+    curve:[.18,.9,.75,.55,.4,.3,.24,.2],
+    src:[['TikTok',88],['X / Twitter',76],['Presse en ligne',41],['Forums & avis',33]],
+    live:true},
+  jo: {t:'Étude · JO 2024 — veille de crise',
+    k:[[458120,''],[61,' %'],[47,'']],
+    n:[['up','▲ record absolu'],['up','▲ +9 pts vs avant-JO'],['','15 min tenu sur 100 % des cas']],
+    curve:[.25,.4,.6,.8,.95,.9,.7,.55],
+    src:[['X / Twitter',91],['Presse en ligne',82],['TikTok',69],['Forums & avis',28]],
+    live:true},
+  x: {t:'Étude · Départs de X — migration',
+    k:[[74210,''],[54,' %'],[9,'']],
+    n:[['up','▲ +38 % sur 30 jours'],['up','▲ sentiment stable'],['','Signal faible confirmé']],
+    curve:[.2,.26,.34,.4,.5,.58,.7,.82],
+    src:[['Forums & avis',72],['X / Twitter',66],['Presse en ligne',58],['TikTok',31]],
+    live:true}
+};
+
+function makePath(v, close){
+  const n = v.length, pts = v.map((y, i) => [i/(n-1)*320, 84 - y*72]);
+  let d = `M${pts[0][0]},${pts[0][1].toFixed(1)}`;
+  for(let i = 1; i < n; i++){
+    const [x0,y0] = pts[i-1], [x1,y1] = pts[i], mx = ((x0+x1)/2).toFixed(1);
+    d += ` C${mx},${y0.toFixed(1)} ${mx},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`;
+  }
+  return close ? d + ' L320,90 L0,90 Z' : d;
+}
+function tween(el, to, suf){
+  const from = parseInt(el.textContent.replace(/\D/g, '')) || 0;
+  const t0 = performance.now(), dur = 900;
+  (function tick(t){
+    const p = Math.min((t - t0)/dur, 1), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(from + (to - from)*e).toLocaleString('fr-FR') + suf;
+    if(p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+sel.addEventListener('change', () => {
+  const d = DATA[sel.value] || DATA[''];
+  title.textContent = d.t;
+  d.k.forEach((kv, i) => tween(kpis[i], kv[0], kv[1]));
+  d.n.forEach((nn, i) => { notes[i].className = nn[0]; notes[i].textContent = nn[1]; });
+  line.setAttribute('d', makePath(d.curve, false));
+  area.setAttribute('d', makePath(d.curve, true));
+  [line, area].forEach(p => { p.style.animation = 'none'; p.getBoundingClientRect(); p.style.animation = ''; });
+  d.src.forEach((s, i) => {
+    rows[i].querySelector('span').textContent = s[0];
+    rows[i].querySelector('i').style.setProperty('--w', s[1] + '%');
+  });
+  live.classList.toggle('on', d.live);
+});
+})();
