@@ -657,3 +657,21 @@ footer{background:#0F1226}
 /* ---------- fix : sélecteur du dashboard (texte blanc sur fond clair) ---------- */
 .dash-select{background-color:#171B36;color:#F4F1E8;border-color:rgba(190,167,107,.45)}
 .dash-select option{background:#171B36;color:#F4F1E8}
+
+/* ---------- section dashboard : décor d'arrière-plan + transition ---------- */
+.dash-wrap{margin-top:-6vh;padding-top:0;padding-bottom:110px;overflow:hidden}
+.dash-wrap::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(19,22,45,.16) 1px, transparent 1.4px);
+  background-size:26px 26px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 42%, #000 25%, transparent 72%);
+  mask-image:radial-gradient(ellipse at 50% 42%, #000 25%, transparent 72%)}
+.dash-deco{position:absolute;inset:0;pointer-events:none}
+.dash-deco .glow{position:absolute;border-radius:50%}
+.dash-deco .g1{width:720px;height:720px;left:-240px;top:-100px;background:radial-gradient(circle,rgba(190,167,107,.2),transparent 65%)}
+.dash-deco .g2{width:620px;height:620px;right:-220px;bottom:-160px;background:radial-gradient(circle,rgba(19,22,45,.12),transparent 65%)}
+.dash-deco .ring-deco{position:absolute;border:1px solid rgba(190,167,107,.4);border-radius:50%;animation:spin-deco 55s linear infinite}
+.dash-deco .r1{width:540px;height:540px;left:-170px;top:140px}
+.dash-deco .r2{width:380px;height:380px;right:-100px;top:-70px;animation-duration:75s;animation-direction:reverse}
+.dash-deco .ring-deco i{position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--or)}
+@keyframes spin-deco{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.dash-deco .ring-deco{animation:none}}

@@ -400,7 +400,7 @@ addEventListener('scroll', () => {
   requestAnimationFrame(() => {
     const y = scrollY;
     if(fade){
-      fade.style.opacity = Math.max(1 - y / 480, 0);
+      fade.style.opacity = Math.max(1 - Math.max(0, y - 150) / 620, 0);
       fade.style.transform = `translateY(${y * .18}px)`;
     }
     if(dash){
