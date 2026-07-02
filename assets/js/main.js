@@ -140,7 +140,7 @@ if(map){
         if((bits >> BigInt(cx)) & 1n){
           mctx.beginPath();
           mctx.arc(cx*cw + cw/2, ry*ch + ch/2, r, 0, 7);
-          mctx.fillStyle = 'rgba(19,22,45,.3)';
+          mctx.fillStyle = 'rgba(244,241,232,.3)';
           mctx.fill();
         }
       }
