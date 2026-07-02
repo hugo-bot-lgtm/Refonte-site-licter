@@ -480,3 +480,43 @@ nav.scrolled{background:rgba(28,33,64,.85)}
 .hero-vignette{background:
   linear-gradient(to right, rgba(13,16,34,.6), transparent 26%, transparent 74%, rgba(13,16,34,.6)),
   linear-gradient(to bottom, rgba(13,16,34,.3), transparent 28%, transparent 55%, var(--noir) 97%)}
+
+/* ---------- capture d'emails (lead forms) ---------- */
+.lead-form{display:flex;max-width:540px;border:1px solid var(--ligne);border-radius:100px;overflow:hidden;
+  background:rgba(21,25,54,.75);backdrop-filter:blur(8px);transition:border-color .3s}
+.lead-form:focus-within{border-color:var(--or)}
+.lead-form.err{border-color:#d97a6a}
+.lead-form input{flex:1;background:none;border:none;color:var(--ivoire);font-family:var(--body);font-weight:300;
+  font-size:.95rem;padding:17px 22px;outline:none;min-width:0}
+.lead-form input::placeholder{color:var(--ivoire-35)}
+.lead-form button{border:none;cursor:pointer;background:var(--or);color:var(--nuit);font-family:var(--body);
+  font-weight:600;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;padding:0 26px;white-space:nowrap;transition:background .3s}
+.lead-form button:hover{background:var(--or-clair)}
+.lead-form button:disabled{opacity:.6;cursor:wait}
+.lead-note{font-size:.72rem;color:var(--ivoire-35);margin-top:12px;max-width:540px;line-height:1.5}
+.lead-ok{display:none;color:var(--or);font-size:.95rem;margin-top:6px}
+@media(max-width:560px){.lead-form{flex-direction:column;border-radius:16px}.lead-form button{padding:15px}}
+
+/* bande CTA sous le dashboard */
+.dash-cta{max-width:980px;margin:26px auto 0;border:1px solid var(--ligne);border-radius:16px;padding:28px 32px;
+  display:flex;gap:28px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  background:linear-gradient(120deg,rgba(190,167,107,.12),rgba(21,25,54,.65))}
+.dash-cta>p{font-size:1.05rem;max-width:36ch;line-height:1.5}
+.dash-cta .col{flex:1;min-width:300px}
+
+/* études gated (blog) */
+.gate{background:none;border:1px solid var(--ligne);border-radius:100px;color:var(--or);font-family:var(--body);
+  font-weight:600;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 18px;cursor:pointer;transition:.3s}
+.gate:hover{background:var(--or);color:var(--nuit)}
+.article .actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.modal-back{position:fixed;inset:0;background:rgba(6,8,18,.78);backdrop-filter:blur(6px);z-index:1200;
+  display:none;align-items:center;justify-content:center;padding:24px}
+.modal-back.open{display:flex}
+.modal{background:var(--bleu);border:1px solid var(--ligne);border-radius:16px;max-width:500px;width:100%;
+  padding:42px 40px;position:relative;animation:slidein .4s cubic-bezier(.19,1,.22,1)}
+.modal .close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--ivoire-60);font-size:1.3rem;cursor:pointer;transition:color .3s}
+.modal .close:hover{color:var(--or)}
+.modal .modal-cat{color:var(--or);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase}
+.modal h3{font-size:1.25rem;text-transform:uppercase;margin:12px 0 10px;line-height:1.3}
+.modal>p{color:var(--ivoire-60);font-size:.92rem;margin-bottom:20px}
+.modal .lead-form{max-width:100%}

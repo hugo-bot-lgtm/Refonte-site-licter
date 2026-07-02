@@ -490,3 +490,55 @@ sel.addEventListener('change', () => {
   live.classList.toggle('on', d.live);
 });
 })();
+
+/* ================= CAPTURE D'EMAILS (leads) ================= */
+(function(){
+"use strict";
+/* ↓ pour la collecte réelle : renseigner un endpoint Formspree (https://formspree.io/f/xxxx) ou équivalent */
+const ENDPOINT = '';
+const RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function send(email, source, cb){
+  if(ENDPOINT){
+    fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({email, source, page: location.pathname})
+    }).then(() => cb()).catch(() => cb());
+  } else setTimeout(cb, 600); /* mode démo */
+}
+document.querySelectorAll('.lead-form').forEach(form => {
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const input = form.querySelector('input'), btn = form.querySelector('button');
+    if(!RX.test(input.value.trim())){ form.classList.add('err'); input.focus(); return; }
+    form.classList.remove('err');
+    btn.disabled = true; btn.textContent = 'Envoi…';
+    send(input.value.trim(), form.dataset.source || 'site', () => {
+      form.style.display = 'none';
+      const ok = form.parentElement.querySelector('.lead-ok');
+      if(ok) ok.style.display = 'block';
+    });
+  });
+});
+
+/* études gated : modale */
+const back = document.getElementById('modal-gate');
+if(back){
+  const titre = back.querySelector('.modal-titre');
+  const form = back.querySelector('.lead-form');
+  const ok = back.querySelector('.lead-ok');
+  const btn = form.querySelector('button');
+  function open(t){
+    titre.textContent = t;
+    form.style.display = 'flex'; form.classList.remove('err');
+    btn.disabled = false; btn.textContent = 'Recevoir le PDF';
+    ok.style.display = 'none';
+    back.classList.add('open');
+    form.querySelector('input').focus();
+  }
+  function close(){ back.classList.remove('open'); }
+  document.querySelectorAll('.gate').forEach(g =>
+    g.addEventListener('click', e => { e.preventDefault(); open(g.dataset.titre); }));
+  back.addEventListener('click', e => { if(e.target === back) close(); });
+  back.querySelector('.close').addEventListener('click', close);
+  addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+}
+})();

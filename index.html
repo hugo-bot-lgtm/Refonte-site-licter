@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=1783000746">
+<link rel="stylesheet" href="assets/css/style.css?v=1783002261">
 </head>
 <body>
 <div id="progress"></div>
@@ -43,9 +43,14 @@
       <span class="h1-line"><span>du monde.</span></span>
     </h1>
     <p class="hero-sub">Licter est le cabinet de conseil en Social Data Intelligence qui transforme les conversations du web et des réseaux sociaux en décisions : veille, social listening, consumer insights.</p>
-    <div class="hero-ctas">
-      <a href="offres.html" class="btn plein">Découvrir nos offres</a>
-      <a href="#carte" class="btn">Voir la data en direct</a>
+    <div class="hero-ctas" style="flex-direction:column;align-items:flex-start;gap:0">
+      <form class="lead-form" data-source="hero" novalidate>
+        <input type="email" placeholder="Votre email professionnel" aria-label="Votre email professionnel" required>
+        <button type="submit">Recevoir l'analyse de ma marque</button>
+      </form>
+      <p class="lead-ok">✓ C'est noté ! Votre analyse arrive sous 24 h ouvrées.</p>
+      <p class="lead-note">Analyse gratuite, sans engagement. En envoyant votre email, vous acceptez d'être recontacté par Licter — désinscription en un clic. <a href="#" style="text-decoration:underline">Politique de confidentialité</a></p>
+      <a href="#carte" style="margin-top:22px;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ivoire-60);border-bottom:1px solid var(--ligne);padding-bottom:3px">Voir la data en direct ↓</a>
     </div>
     </div>
 </header>
@@ -85,6 +90,17 @@
             <div class="src"><span>Forums & avis</span><div><i style="--w:31%"></i></div></div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="dash-cta rv d1">
+      <p>Vous voulez ce dashboard <b class="gold">pour votre marque</b> ? Recevez une première analyse sous 24 h.</p>
+      <div class="col">
+        <form class="lead-form" data-source="dashboard" novalidate>
+          <input type="email" placeholder="Votre email professionnel" aria-label="Votre email professionnel" required>
+          <button type="submit">Recevoir mon analyse</button>
+        </form>
+        <p class="lead-ok">✓ C'est noté ! Un consultant vous répond sous 24 h ouvrées.</p>
+        <p class="lead-note">Sans engagement — désinscription en un clic.</p>
       </div>
     </div>
   </div>
@@ -281,6 +297,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/main.js?v=1783000746"></script>
+<script src="assets/js/main.js?v=1783002261"></script>
 </body>
 </html>
