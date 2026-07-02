@@ -337,7 +337,7 @@ function draw(now){
     if(q.z < -.25) continue;
     const a = .12 + .42 * (q.z + 1) / 2;
     const sz = (q.z > 0 ? 2 : 1.3) * devicePixelRatio * q.s;
-    ctx.fillStyle = `rgba(19,22,45,${a})`;
+    ctx.fillStyle = `rgba(190,167,107,${a + .1})`;
     ctx.fillRect(q.sx, q.sy, sz, sz);
   }
   /* arcs de données entre capitales */
