@@ -91,13 +91,13 @@ if(canvas){
       if(dm < 180*devicePixelRatio){ p.x += (p.x - mouse.x)/dm * .6; p.y += (p.y - mouse.y)/dm * .6; }
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, 7);
-      ctx.fillStyle = p.gold ? 'rgba(190,167,107,1)' : 'rgba(244,241,232,.75)';
+      ctx.fillStyle = p.gold ? 'rgba(190,167,107,1)' : 'rgba(19,22,45,.55)';
       ctx.fill();
     }
     for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
       const a = pts[i], b = pts[j], d = Math.hypot(a.x-b.x, a.y-b.y);
       if(d < LINK){
-        ctx.strokeStyle = (a.gold && b.gold) ? `rgba(190,167,107,${.55*(1-d/LINK)})` : `rgba(244,241,232,${.25*(1-d/LINK)})`;
+        ctx.strokeStyle = (a.gold && b.gold) ? `rgba(190,167,107,${.55*(1-d/LINK)})` : `rgba(19,22,45,${.2*(1-d/LINK)})`;
         ctx.lineWidth = devicePixelRatio*.8;
         ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
       }
@@ -140,7 +140,7 @@ if(map){
         if((bits >> BigInt(cx)) & 1n){
           mctx.beginPath();
           mctx.arc(cx*cw + cw/2, ry*ch + ch/2, r, 0, 7);
-          mctx.fillStyle = 'rgba(244,241,232,.22)';
+          mctx.fillStyle = 'rgba(19,22,45,.3)';
           mctx.fill();
         }
       }
@@ -327,7 +327,7 @@ function draw(now){
   ctx.clearRect(0, 0, W, H);
   /* halo de la planète */
   const g = ctx.createRadialGradient(CX, CY, R*.55, CX, CY, R*1.25);
-  g.addColorStop(0, 'rgba(19,22,45,.55)');
+  g.addColorStop(0, 'rgba(19,22,45,.06)');
   g.addColorStop(1, 'rgba(19,22,45,0)');
   ctx.fillStyle = g;
   ctx.fillRect(CX-R*1.3, CY-R*1.3, R*2.6, R*2.6);
@@ -337,7 +337,7 @@ function draw(now){
     if(q.z < -.25) continue;
     const a = .12 + .42 * (q.z + 1) / 2;
     const sz = (q.z > 0 ? 2 : 1.3) * devicePixelRatio * q.s;
-    ctx.fillStyle = `rgba(244,241,232,${a})`;
+    ctx.fillStyle = `rgba(19,22,45,${a})`;
     ctx.fillRect(q.sx, q.sy, sz, sz);
   }
   /* arcs de données entre capitales */
