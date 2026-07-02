@@ -365,7 +365,7 @@ function draw(now){
     if(q.z > -.05){
       ctx.beginPath();
       ctx.arc(q.sx, q.sy, 2.4 * devicePixelRatio * q.s, 0, 7);
-      ctx.fillStyle = '#BEA76B';
+      ctx.fillStyle = '#13162D';
       ctx.fill();
     }
   });
@@ -376,7 +376,7 @@ function draw(now){
     const phase = (t * .8 + i * .4) % 1;
     ctx.beginPath();
     ctx.arc(q.sx, q.sy, (4 + phase * 16) * devicePixelRatio * q.s, 0, 7);
-    ctx.strokeStyle = `rgba(190,167,107,${.5 * (1 - phase)})`;
+    ctx.strokeStyle = `rgba(19,22,45,${.55 * (1 - phase)})`;
     ctx.lineWidth = devicePixelRatio;
     ctx.stroke();
     ctx.beginPath();
