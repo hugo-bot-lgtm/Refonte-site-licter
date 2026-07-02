@@ -33,8 +33,9 @@
 </nav>
 <!-- ============ HERO ============ -->
 <header id="hero">
-  <canvas id="constellation" aria-hidden="true"></canvas>
-  <div class="wrap hero-content">
+  <canvas id="globe" aria-hidden="true"></canvas>
+  <div class="hero-vignette"></div>
+  <div class="wrap hero-content" id="hero-fade">
     <div class="hero-badge"><i></i> Top 50 mondial · Social Intelligence Insider</div>
     <h1>
       <span class="h1-line"><span>La data du</span></span>
@@ -46,15 +47,40 @@
       <a href="offres.html" class="btn plein">Découvrir nos offres</a>
       <a href="#carte" class="btn">Voir la data en direct</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><b data-count="50" data-suffix="+">0</b><small>clients accompagnés</small></div>
-      <div class="stat"><b data-count="3" data-suffix=" Mds">0</b><small>de voix analysées</small></div>
-      <div class="stat"><b data-count="20" data-suffix="+">0</b><small>langues couvertes</small></div>
-      <div class="stat"><b data-count="15" data-suffix=" min">0</b><small>pour vous alerter, 24/7</small></div>
+    </div>
+</header>
+<!-- ============ APERÇU VIGIE360 (parallaxe) ============ -->
+<section class="dash-wrap" aria-label="Aperçu de l'interface VIGIE360 — démo">
+  <div class="wrap">
+    <div id="dash-panel" class="dash rv">
+      <div class="dash-bar"><span class="dots"><i></i><i></i><i></i></span><span class="dash-title">VIGIE360 · Salle de veille — démo</span><em class="dash-live">● LIVE</em></div>
+      <div class="dash-body">
+        <div class="dash-kpis">
+          <div class="dkpi"><small>Mentions / 24 h</small><b data-count="48213">0</b><span class="up">▲ +12 % vs hier</span></div>
+          <div class="dkpi"><small>Sentiment positif</small><b data-count="68" data-suffix=" %">0</b><span class="up">▲ +4 pts / 7 j</span></div>
+          <div class="dkpi"><small>Alertes traitées</small><b data-count="7">0</b><span>Délai max : 15 min</span></div>
+        </div>
+        <div class="dash-main">
+          <div class="dash-chart">
+            <small>Volume de conversations — 7 jours</small>
+            <svg viewBox="0 0 320 90" preserveAspectRatio="none" aria-hidden="true">
+              <defs><linearGradient id="gradOr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#BEA76B" stop-opacity=".32"/><stop offset="1" stop-color="#BEA76B" stop-opacity="0"/></linearGradient></defs>
+              <path class="area" d="M0,70 C30,62 50,74 80,58 C110,42 140,52 170,44 C200,36 230,20 260,28 C285,34 300,22 320,26 L320,90 L0,90 Z" fill="url(#gradOr)"/>
+              <path class="line" d="M0,70 C30,62 50,74 80,58 C110,42 140,52 170,44 C200,36 230,20 260,28 C285,34 300,22 320,26" fill="none" stroke="#BEA76B" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="dash-src">
+            <small>Top sources</small>
+            <div class="src"><span>X / Twitter</span><div><i style="--w:78%"></i></div></div>
+            <div class="src"><span>TikTok</span><div><i style="--w:64%"></i></div></div>
+            <div class="src"><span>Presse en ligne</span><div><i style="--w:52%"></i></div></div>
+            <div class="src"><span>Forums & avis</span><div><i style="--w:31%"></i></div></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="scroll-hint">Défiler</div>
-</header>
+</section>
 
 <!-- ============ MARQUEE CLIENTS ============ -->
 <div class="marquee" aria-label="Ils nous font confiance">

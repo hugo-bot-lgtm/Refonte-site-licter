@@ -1,3 +1,4 @@
+const LICTER_MASK = "1ff00180000003fff000201c00000;f0ffffd20c0000001fff01f89f600000;10ffffffffb0007c0001ffe0f627f387f80;ffffffffffffebff00001fe1d3f31ffffc1;fffffffffffffcf7800e07e3e0fffffffef;7ffffffffffffffbc00403c1c57ffffff80;3dfffffffffffffdf0000180303ffffffe0;33fffffffffffe1f0000000701ffff8b80;180fffffffffff880000003f03fffc0400;1c07ffffffffffce1000007f1ffff80080;83ffffffffffffe2c0000ffbffff40000;3fffffffffffffe00000fffffff00000;3fffffffffffffe00001afffffc00000;2fffffffffffffe000011fffffc00000;7fffffff8fbffc000003fffffc00000;63fffffffcc1e5f8000007ffffc00000;fffffff9ddc878000003ffffc00000;10affffff9ff523c000001ffffc00000;10bffffffbfe4a18000000ffffc00000;e8ffffffff003f0000000ffff800000;31ffffffff007f80000007fff000000;1fffffffffdffc0000003ffc000000;1ffffffdf7fffc00000041fe000000;1ffffff9f7fffe00000040f8000000;fffff0bffffff00000000f4000000;7fffe1fefffff00000060e0000000;fcfc1fefffff80000108e0000000;1787c0fdfffff0000040dc0000000;20f838079fffff0000000f80000000;f01801bfffff8000003c00000000;d018007fffff8000003000000000;30d01003ffffff00002e2000000000;40102003fffffe00007fc000000000;48202001fffffc0000ff0000000000;c280001ffff000003ff0000000000;e100000fffc000003ff8000000000;f2000007ffc000003ff8000000000;a166000003ffc00001fff8000000000;3c304000001ffc00007fff8000000000;170000000001ff80000ffffc000000000;b0060000001ff80000ffff8000000000;80000000003ff80000ffff0000000000;20000000003ff800007fff0000000000;27800000003ff800007fff0000000000;67c00000013ff800007ffe0000000000;7fc00000018ff800007ffc0000000000;fff00000018ff800003ff80000000000;fffc0000018ff000003ff80000000000;1fffc0000008ff000000ff80000000000;3fffc00000007f0000007fc0000000000;3fff800000007f0000007fc0000000000;3fff800000003e0000003fc0000000000;1fc7800000001e0000003fc0000000000;1f80800000000200000017c0000000000;f0000000000000000000fc0000000000;400000000000000000000007e0000000000;400000000000000000000003e0000000000;100800000000000000000001c0000000000;180000000000000000000001e0000000000;e0000000000;e0000000000;60000000000;20000000000;1c0000000000";
 /* Licter — main.js : chaque module ne s'active que si la page contient ses éléments */
 (function(){
 "use strict";
@@ -41,11 +42,11 @@ const cio = new IntersectionObserver(entries => {
     if(!entry.isIntersecting) return;
     cio.unobserve(entry.target);
     const el = entry.target, target = +el.dataset.count, suf = el.dataset.suffix || '';
-    if(reduced){ el.textContent = target + suf; return; }
+    if(reduced){ el.textContent = target.toLocaleString('fr-FR') + suf; return; }
     const t0 = performance.now(), dur = 1600;
     (function tick(t){
       const p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * e) + suf;
+      el.textContent = Math.round(target * e).toLocaleString('fr-FR') + suf;
       if(p < 1) requestAnimationFrame(tick);
     })(t0);
   });
@@ -108,7 +109,7 @@ if(canvas){
 /* ---------- carte du monde en points ---------- */
 const map = document.getElementById('dotmap');
 if(map){
-  const MASK = "1ff00180000003fff000201c00000;f0ffffd20c0000001fff01f89f600000;10ffffffffb0007c0001ffe0f627f387f80;ffffffffffffebff00001fe1d3f31ffffc1;fffffffffffffcf7800e07e3e0fffffffef;7ffffffffffffffbc00403c1c57ffffff80;3dfffffffffffffdf0000180303ffffffe0;33fffffffffffe1f0000000701ffff8b80;180fffffffffff880000003f03fffc0400;1c07ffffffffffce1000007f1ffff80080;83ffffffffffffe2c0000ffbffff40000;3fffffffffffffe00000fffffff00000;3fffffffffffffe00001afffffc00000;2fffffffffffffe000011fffffc00000;7fffffff8fbffc000003fffffc00000;63fffffffcc1e5f8000007ffffc00000;fffffff9ddc878000003ffffc00000;10affffff9ff523c000001ffffc00000;10bffffffbfe4a18000000ffffc00000;e8ffffffff003f0000000ffff800000;31ffffffff007f80000007fff000000;1fffffffffdffc0000003ffc000000;1ffffffdf7fffc00000041fe000000;1ffffff9f7fffe00000040f8000000;fffff0bffffff00000000f4000000;7fffe1fefffff00000060e0000000;fcfc1fefffff80000108e0000000;1787c0fdfffff0000040dc0000000;20f838079fffff0000000f80000000;f01801bfffff8000003c00000000;d018007fffff8000003000000000;30d01003ffffff00002e2000000000;40102003fffffe00007fc000000000;48202001fffffc0000ff0000000000;c280001ffff000003ff0000000000;e100000fffc000003ff8000000000;f2000007ffc000003ff8000000000;a166000003ffc00001fff8000000000;3c304000001ffc00007fff8000000000;170000000001ff80000ffffc000000000;b0060000001ff80000ffff8000000000;80000000003ff80000ffff0000000000;20000000003ff800007fff0000000000;27800000003ff800007fff0000000000;67c00000013ff800007ffe0000000000;7fc00000018ff800007ffc0000000000;fff00000018ff800003ff80000000000;fffc0000018ff000003ff80000000000;1fffc0000008ff000000ff80000000000;3fffc00000007f0000007fc0000000000;3fff800000007f0000007fc0000000000;3fff800000003e0000003fc0000000000;1fc7800000001e0000003fc0000000000;1f80800000000200000017c0000000000;f0000000000000000000fc0000000000;400000000000000000000007e0000000000;400000000000000000000003e0000000000;100800000000000000000001c0000000000;180000000000000000000001e0000000000;e0000000000;e0000000000;60000000000;20000000000;1c0000000000".split(";");
+  const MASK = LICTER_MASK.split(";");
   const COLS = 140, ROWS = 64, LAT_TOP = 75, LAT_BOT = -56;
   const mctx = map.getContext('2d');
   const tooltip = document.getElementById('tooltip');
@@ -253,4 +254,156 @@ if(form){
     document.getElementById('form-ok').style.display = 'block';
   });
 }
+})();
+
+
+/* ================= GLOBE 3D (accueil) ================= */
+(function(){
+"use strict";
+const cv = document.getElementById('globe');
+if(!cv) return;
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ctx = cv.getContext('2d');
+const COLS = 140, ROWS = 64, LAT_TOP = 75, LAT_BOT = -56;
+const D2R = Math.PI / 180;
+
+/* points terrestres -> vecteurs unitaires 3D (1 colonne sur 2 pour la perf) */
+const land = [];
+LICTER_MASK.split(";").forEach((row, ry) => {
+  const bits = BigInt('0x' + row);
+  const lat = (LAT_TOP + (LAT_BOT - LAT_TOP) * (ry + .5) / ROWS) * D2R;
+  for(let cx = 0; cx < COLS; cx += 2){
+    if((bits >> BigInt(cx)) & 1n){
+      const lon = (-180 + 360 * (cx + .5) / COLS) * D2R;
+      land.push({x: Math.cos(lat) * Math.cos(lon), y: Math.sin(lat), z: Math.cos(lat) * Math.sin(lon)});
+    }
+  }
+});
+const CITY = [
+  ['Paris', 48.85, 2.35], ['New York', 40.7, -74], ['São Paulo', -23.5, -46.6],
+  ['Lagos', 6.45, 3.4], ['Dubaï', 25.2, 55.3], ['Singapour', 1.35, 103.8],
+  ['Tokyo', 35.7, 139.7], ['Sydney', -33.9, 151.2]
+].map(([n, la, lo]) => ({n, x: Math.cos(la*D2R)*Math.cos(lo*D2R), y: Math.sin(la*D2R), z: Math.cos(la*D2R)*Math.sin(lo*D2R)}));
+const ARCS = [[0,1],[0,6],[1,2],[6,7],[0,4],[5,0],[4,5],[1,3]];
+
+function slerp(a, b, t){
+  let d = a.x*b.x + a.y*b.y + a.z*b.z;
+  d = Math.min(1, Math.max(-1, d));
+  const w = Math.acos(d), sw = Math.sin(w) || 1e-6;
+  const ka = Math.sin((1-t)*w)/sw, kb = Math.sin(t*w)/sw;
+  return {x: ka*a.x + kb*b.x, y: ka*a.y + kb*b.y, z: ka*a.z + kb*b.z};
+}
+
+let W, H, R, rotY = .6, vel = .0018, drag = false, lastX = 0, mx = 0;
+function resize(){
+  W = cv.width = cv.offsetWidth * devicePixelRatio;
+  H = cv.height = cv.offsetHeight * devicePixelRatio;
+  R = Math.min(W, H) * .38;
+}
+resize(); addEventListener('resize', resize);
+
+cv.addEventListener('mousedown', e => { drag = true; lastX = e.clientX; });
+addEventListener('mouseup', () => drag = false);
+addEventListener('mousemove', e => {
+  if(drag){ rotY += (e.clientX - lastX) * .005; lastX = e.clientX; }
+  mx = (e.clientX / innerWidth - .5);
+}, {passive:true});
+
+const TILT = .42, cosT = Math.cos(TILT), sinT = Math.sin(TILT);
+function proj(p){
+  const cy = Math.cos(rotY), sy = Math.sin(rotY);
+  const x1 = p.x*cy + p.z*sy, z1 = -p.x*sy + p.z*cy;
+  const y2 = p.y*cosT - z1*sinT, z2 = p.y*sinT + z1*cosT;
+  const s = 1.4 / (1.4 - z2 * .42);
+  return {sx: W/2 + x1*R*s, sy: H/2 - y2*R*s, z: z2, s};
+}
+
+let t0 = performance.now();
+function draw(now){
+  const t = (now - t0) / 1000;
+  if(!drag) rotY += vel + mx * .0012;
+  ctx.clearRect(0, 0, W, H);
+  /* halo de la planète */
+  const g = ctx.createRadialGradient(W/2, H/2, R*.55, W/2, H/2, R*1.25);
+  g.addColorStop(0, 'rgba(19,22,45,.55)');
+  g.addColorStop(1, 'rgba(19,22,45,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(W/2-R*1.3, H/2-R*1.3, R*2.6, R*2.6);
+  /* points terrestres */
+  for(const p of land){
+    const q = proj(p);
+    if(q.z < -.25) continue;
+    const a = .06 + .3 * (q.z + 1) / 2;
+    const sz = (q.z > 0 ? 1.5 : 1) * devicePixelRatio * q.s;
+    ctx.fillStyle = `rgba(244,241,232,${a})`;
+    ctx.fillRect(q.sx, q.sy, sz, sz);
+  }
+  /* arcs de données entre capitales */
+  ARCS.forEach((pair, i) => {
+    const A = CITY[pair[0]], B = CITY[pair[1]];
+    ctx.beginPath();
+    let visible = false;
+    for(let k = 0; k <= 36; k++){
+      const tt = k / 36;
+      const m = slerp(A, B, tt);
+      const lift = 1 + .22 * Math.sin(Math.PI * tt);
+      const q = proj({x: m.x*lift, y: m.y*lift, z: m.z*lift});
+      if(k === 0) ctx.moveTo(q.sx, q.sy); else ctx.lineTo(q.sx, q.sy);
+      if(q.z > 0) visible = true;
+    }
+    if(!visible) return;
+    ctx.strokeStyle = 'rgba(190,167,107,.28)';
+    ctx.lineWidth = devicePixelRatio;
+    ctx.stroke();
+    /* paquet de données voyageant sur l'arc */
+    const tp = (t * .22 + i * .13) % 1;
+    const m = slerp(A, B, tp);
+    const lift = 1 + .22 * Math.sin(Math.PI * tp);
+    const q = proj({x: m.x*lift, y: m.y*lift, z: m.z*lift});
+    if(q.z > -.05){
+      ctx.beginPath();
+      ctx.arc(q.sx, q.sy, 2.4 * devicePixelRatio * q.s, 0, 7);
+      ctx.fillStyle = '#BEA76B';
+      ctx.fill();
+    }
+  });
+  /* capitales : pulsations dorées */
+  CITY.forEach((c, i) => {
+    const q = proj(c);
+    if(q.z < .05) return;
+    const phase = (t * .8 + i * .4) % 1;
+    ctx.beginPath();
+    ctx.arc(q.sx, q.sy, (4 + phase * 16) * devicePixelRatio * q.s, 0, 7);
+    ctx.strokeStyle = `rgba(190,167,107,${.5 * (1 - phase)})`;
+    ctx.lineWidth = devicePixelRatio;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(q.sx, q.sy, 2.6 * devicePixelRatio * q.s, 0, 7);
+    ctx.fillStyle = '#BEA76B';
+    ctx.fill();
+  });
+  if(!reduced) requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
+})();
+
+/* ================= EFFETS DE SCROLL (fade hero + parallaxe dashboard) ================= */
+(function(){
+"use strict";
+if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+const fade = document.getElementById('hero-fade');
+const dash = document.getElementById('dash-panel');
+if(!fade && !dash) return;
+addEventListener('scroll', () => {
+  requestAnimationFrame(() => {
+    const y = scrollY;
+    if(fade){
+      fade.style.opacity = Math.max(1 - y / 480, 0);
+      fade.style.transform = `translateY(${y * .18}px)`;
+    }
+    if(dash){
+      dash.style.transform = `translateY(${-Math.min(y, 700) * .16}px)`;
+    }
+  });
+}, {passive:true});
 })();

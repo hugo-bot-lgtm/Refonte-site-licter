@@ -362,3 +362,45 @@ footer{border-top:1px solid var(--ligne);padding:64px 0 40px;background:var(--bl
 .coord .ligne-c a:hover{color:var(--or)}
 #form-ok{display:none;border:1px solid var(--or);padding:22px 26px;color:var(--or);margin-top:10px;font-size:.94rem}
 @media(max-width:900px){.uc-detail,.form-grid,.valeurs{grid-template-columns:1fr}.chiffres{grid-template-columns:1fr 1fr}}
+
+/* ---------- globe 3D + vignette hero ---------- */
+#globe{position:absolute;inset:0;width:100%;height:100%;cursor:grab}
+#globe:active{cursor:grabbing}
+.hero-vignette{position:absolute;inset:0;pointer-events:none;z-index:1;background:
+  linear-gradient(to right, rgba(0,0,0,.72), transparent 26%, transparent 74%, rgba(0,0,0,.72)),
+  linear-gradient(to bottom, rgba(0,0,0,.35), transparent 28%, transparent 52%, #000 97%)}
+.hero-content{will-change:opacity,transform}
+
+/* ---------- dashboard parallaxe (aperçu VIGIE360) ---------- */
+.dash-wrap{position:relative;z-index:5;margin-top:-17vh;padding-bottom:100px}
+.dash{border:1px solid var(--ligne);background:rgba(11,13,28,.9);backdrop-filter:blur(16px);
+  box-shadow:0 50px 110px rgba(0,0,0,.65);will-change:transform;max-width:980px;margin:0 auto}
+.dash-bar{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--ligne)}
+.dash-bar .dots{display:flex;gap:7px}
+.dash-bar .dots i{width:10px;height:10px;border-radius:50%;background:rgba(244,241,232,.14)}
+.dash-title{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ivoire-60)}
+.dash-live{margin-left:auto;font-size:.66rem;letter-spacing:.2em;color:#5ecb8f;font-style:normal;animation:pulse 1.8s infinite;border:1px solid rgba(94,203,143,.3);padding:5px 12px;border-radius:100px}
+.dash-body{padding:26px;display:grid;gap:22px}
+.dash-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ligne);border:1px solid var(--ligne)}
+.dkpi{background:var(--bleu);padding:20px 24px}
+.dkpi small{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ivoire-35);display:block;margin-bottom:10px}
+.dkpi b{font-family:var(--display);font-weight:700;font-size:1.7rem;color:var(--or);display:block;line-height:1}
+.dkpi span{font-size:.72rem;letter-spacing:.1em;display:block;margin-top:9px;color:var(--ivoire-35)}
+.dkpi .up{color:#5ecb8f}
+.dash-main{display:grid;grid-template-columns:1.6fr 1fr;gap:22px}
+.dash-chart,.dash-src{border:1px solid rgba(244,241,232,.08);padding:20px 22px;background:rgba(19,22,45,.5)}
+.dash-chart small,.dash-src>small{font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ivoire-35);display:block;margin-bottom:16px}
+.dash-chart svg{width:100%;height:110px;display:block}
+.dash-chart .line{stroke-dasharray:700;stroke-dashoffset:700}
+.dash.in .line{animation:drawline 2.2s .4s cubic-bezier(.19,1,.22,1) forwards}
+@keyframes drawline{to{stroke-dashoffset:0}}
+.dash-chart .area{opacity:0}
+.dash.in .area{animation:fadearea .9s 1.6s forwards}
+@keyframes fadearea{to{opacity:1}}
+.src{margin-bottom:14px}
+.src span{font-size:.78rem;color:var(--ivoire-60);display:block;margin-bottom:7px}
+.src div{height:6px;background:rgba(244,241,232,.08);overflow:hidden}
+.src i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--or),var(--or-clair));transition:width 1.5s cubic-bezier(.19,1,.22,1) .6s}
+.dash.in .src i{width:var(--w)}
+@media(max-width:820px){.dash-main,.dash-kpis{grid-template-columns:1fr}.dash-wrap{margin-top:-10vh}}
+@media(prefers-reduced-motion:reduce){.dash-chart .line{stroke-dashoffset:0}.dash-chart .area{opacity:1}.dash .src i{width:var(--w)}}
