@@ -294,11 +294,13 @@ function slerp(a, b, t){
   return {x: ka*a.x + kb*b.x, y: ka*a.y + kb*b.y, z: ka*a.z + kb*b.z};
 }
 
-let W, H, R, rotY = .6, vel = .0018, drag = false, lastX = 0, mx = 0;
+let W, H, R, CX, CY, rotY = .6, vel = .0018, drag = false, lastX = 0, mx = 0;
 function resize(){
   W = cv.width = cv.offsetWidth * devicePixelRatio;
   H = cv.height = cv.offsetHeight * devicePixelRatio;
   R = Math.min(W, H) * .38;
+  CX = W * (cv.offsetWidth > 860 ? .64 : .5);
+  CY = H * .5;
 }
 resize(); addEventListener('resize', resize);
 
@@ -315,7 +317,7 @@ function proj(p){
   const x1 = p.x*cy + p.z*sy, z1 = -p.x*sy + p.z*cy;
   const y2 = p.y*cosT - z1*sinT, z2 = p.y*sinT + z1*cosT;
   const s = 1.4 / (1.4 - z2 * .42);
-  return {sx: W/2 + x1*R*s, sy: H/2 - y2*R*s, z: z2, s};
+  return {sx: CX + x1*R*s, sy: CY - y2*R*s, z: z2, s};
 }
 
 let t0 = performance.now();
@@ -324,11 +326,11 @@ function draw(now){
   if(!drag) rotY += vel + mx * .0012;
   ctx.clearRect(0, 0, W, H);
   /* halo de la planète */
-  const g = ctx.createRadialGradient(W/2, H/2, R*.55, W/2, H/2, R*1.25);
+  const g = ctx.createRadialGradient(CX, CY, R*.55, CX, CY, R*1.25);
   g.addColorStop(0, 'rgba(19,22,45,.55)');
   g.addColorStop(1, 'rgba(19,22,45,0)');
   ctx.fillStyle = g;
-  ctx.fillRect(W/2-R*1.3, H/2-R*1.3, R*2.6, R*2.6);
+  ctx.fillRect(CX-R*1.3, CY-R*1.3, R*2.6, R*2.6);
   /* points terrestres */
   for(const p of land){
     const q = proj(p);

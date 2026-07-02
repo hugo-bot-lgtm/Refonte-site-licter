@@ -450,3 +450,10 @@ footer{border-top:1px solid var(--ligne);padding:64px 0 40px;background:var(--bl
 .dash-live.on{display:inline-block}
 .dkpi .down{color:#d97a6a}
 @media(max-width:620px){.dash-select{margin-left:0;max-width:100%}}
+
+/* ---------- fix accueil : texte à gauche, globe à droite ---------- */
+@media(min-width:861px){
+  #hero .hero-content{max-width:none;padding-left:28px;padding-right:0}
+  #hero .hero-content>*{max-width:560px}
+  #hero h1{max-width:12ch}
+}
