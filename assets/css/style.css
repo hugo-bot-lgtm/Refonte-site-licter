@@ -453,6 +453,7 @@ footer{border-top:1px solid var(--ligne);padding:64px 0 40px;background:var(--bl
 
 /* ---------- fix accueil : texte à gauche, globe à droite ---------- */
 @media(min-width:861px){
+  #hero .hero-content{max-width:1500px}
   #hero .hero-content>*{max-width:560px}
   #hero h1{max-width:12ch}
 }

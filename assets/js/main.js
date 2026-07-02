@@ -299,7 +299,7 @@ function resize(){
   W = cv.width = cv.offsetWidth * devicePixelRatio;
   H = cv.height = cv.offsetHeight * devicePixelRatio;
   R = Math.min(W, H) * .38;
-  CX = W * (cv.offsetWidth > 860 ? .64 : .5);
+  CX = W * (cv.offsetWidth > 860 ? .68 : .5);
   CY = H * .5;
 }
 resize(); addEventListener('resize', resize);
