@@ -278,9 +278,10 @@ const COMS = [
   {ox: .56, oy: .08, rx:.52, ry:.46, rot: .5,  n:112, hubs:4, col:[ 43,138,117]}, /* teal */
   {ox:-.62, oy:-.28, rx:.36, ry:.28, rot: .3,  n:74,  hubs:3, col:[205,110, 60]}, /* terracotta */
   {ox:-.30, oy: .42, rx:.34, ry:.27, rot:-.2,  n:66,  hubs:2, col:[ 80, 98,178]}, /* bleu ardoise */
-  {ox:-.95, oy: .80, rx:.24, ry:.20, rot: .2,  n:52,  hubs:2, col:[ 19, 22, 45]}  /* navy, détaché */
+  {ox:-.95, oy: .80, rx:.24, ry:.20, rot: .2,  n:52,  hubs:2, col:[ 19, 22, 45]}, /* navy, détaché */
+  {ox: .26, oy: .58, rx:.30, ry:.24, rot:-.3,  n:60,  hubs:3, col:[152, 90,118]}  /* vieux rose */
 ];
-const BRIDGES = [[0,1],[0,2],[0,3],[3,4],[1,3]];
+const BRIDGES = [[0,1],[0,2],[0,3],[3,4],[1,3],[0,5],[1,5],[3,5],[2,3],[2,4]];
 
 /* génération des nœuds et liens (positions en unités de R) */
 const nodes = [], edges = [];
@@ -299,9 +300,10 @@ COMS.forEach((c, ci) => {
       ph: rnd()*7, sp: .3 + rnd()*.5, amp: .012 + rnd()*.014
     });
   }
-  /* liens intra-communauté : chaque nœud -> un hub + un voisin proche */
+  /* liens intra-communauté : hubs multiples, voisin proche, liens longue portée */
   for(let i = first + c.hubs; i < nodes.length; i++){
     edges.push({a: i, b: first + Math.floor(rnd()*c.hubs), ci, bow: (rnd()-.5)*.5});
+    if(rnd() < .5) edges.push({a: i, b: first + Math.floor(rnd()*c.hubs), ci, bow: (rnd()-.5)*.6});
     if(rnd() < .8){
       let best = -1, bd = 1e9;
       for(let j = first; j < nodes.length; j++){
@@ -311,14 +313,23 @@ COMS.forEach((c, ci) => {
       }
       if(best >= 0) edges.push({a: i, b: best, ci, bow: (rnd()-.5)*.5});
     }
+    /* lien longue portée dans la communauté : les grandes vrilles de la référence */
+    if(rnd() < .22) edges.push({a: i, b: first + c.hubs + Math.floor(rnd()*(c.n - c.hubs)), ci, bow: (rnd()-.5)*1.1});
   }
 });
-/* ponts entre communautés (hub -> hub) */
-BRIDGES.forEach(([a, b]) => {
+/* ponts entre communautés (hub -> hub, plusieurs liaisons par pont) */
+BRIDGES.forEach(([a, b], bi) => {
   const fa = COMS.slice(0, a).reduce((s, c) => s + c.n, 0);
   const fb = COMS.slice(0, b).reduce((s, c) => s + c.n, 0);
-  edges.push({a: fa, b: fb, ci: a, bow: .35, bridge: true});
-  edges.push({a: fa + 1, b: fb + 1, ci: b, bow: -.3, bridge: true});
+  for(let k = 0; k < 3; k++){
+    edges.push({
+      a: fa + (k % COMS[a].hubs),
+      b: fb + (k % COMS[b].hubs),
+      ci: k % 2 ? b : a,
+      bow: (k - 1) * .3 + (bi % 2 ? .12 : -.12),
+      bridge: true
+    });
+  }
 });
 
 /* impulsions : petits paquets lumineux qui parcourent des liens */
