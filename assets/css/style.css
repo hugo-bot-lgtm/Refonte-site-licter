@@ -771,8 +771,9 @@ footer{background:#0F1226}
 /* --- réseaux sociaux : logo + part de voix --- */
 .src .s-head{display:flex;align-items:center;gap:9px;font-size:.78rem;color:var(--ivoire-60);margin-bottom:7px}
 .src .s-head em{margin-left:auto;font-style:normal;color:var(--or);font-weight:600;font-size:.74rem;letter-spacing:.05em}
-.s-ico{width:15px;height:15px;display:inline-flex;color:var(--or);flex:none}
-.s-ico svg{width:100%;height:100%}
+/* span (pas <i>) : l'ancienne règle .src i habille les barres de progression */
+.src .s-ico{width:15px;height:15px;display:inline-flex;color:var(--or);flex:none;margin:0;background:none}
+.src .s-ico svg{width:100%;height:100%;display:block}
 .dkpi .down{color:#E05656}
 
 /* --- verbatims en direct --- */

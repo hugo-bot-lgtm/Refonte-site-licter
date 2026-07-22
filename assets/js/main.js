@@ -563,7 +563,7 @@ function setPie(p){
 /* réseaux sociaux : lignes avec logo + part de voix */
 function setSources(src){
   srcList.innerHTML = src.map(([net, w], i) =>
-    `<div class="src"><span class="s-head"><i class="s-ico">${ICONS[net]}</i>${NAMES[net]}<em>${w} %</em></span><div><i style="--w:${w}%;transition-delay:${.15*i + .3}s"></i></div></div>`
+    `<div class="src"><span class="s-head"><span class="s-ico">${ICONS[net]}</span>${NAMES[net]}<em>${w} %</em></span><div><i style="--w:${w}%;transition-delay:${.15*i + .3}s"></i></div></div>`
   ).join('');
 }
 
