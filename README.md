@@ -4,7 +4,7 @@ Maquette multi-pages du nouveau site Licter (charte : Aiglon / Josefin Sans, #13
 
 ## Structure
 - `index.html` — Accueil (constellation, carte mondiale interactive, flux de veille)
-- `use-cases.html` · `technologies.html` · `clients.html` · `offres.html` · `equipe.html` · `blog.html` · `contact.html`
+- `use-cases.html` · `clients.html` · `equipe.html` · `blog.html` · `contact.html`
 - `assets/css/style.css` — styles partagés
 - `assets/js/main.js` — animations (chaque module s'active seulement si la page contient ses éléments)
 - `assets/fonts/` — Aiglon Pro (woff2) · `assets/img/` — logo
