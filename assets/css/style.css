@@ -820,3 +820,6 @@ footer{background:#0F1226}
 .uc-refs img{height:24px;width:auto;max-width:86px;object-fit:contain}
 /* bandeau logos seuls : un peu plus grands sans les noms */
 .marquee-track .mq-logo img{height:34px;max-width:130px}
+
+/* cartes vidéo cliquables (liens YouTube) */
+a.video{display:block}
