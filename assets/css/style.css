@@ -730,7 +730,11 @@ footer{background:#0F1226}
 /* ============ DASHBOARD ENRICHI (retours managers) ============ */
 /* hero raccourci : mini-audit puis dashboard arrivent plus vite à l'écran */
 #hero{min-height:78vh}
-#hero .hero-content{padding:150px 0 40px}
+/* uniquement haut/bas : le raccourci padding écrasait le padding gauche */
+#hero .hero-content{padding-top:150px;padding-bottom:40px}
+@media(min-width:861px){
+  #hero .hero-content{padding-left:clamp(56px,9vw,170px)}
+}
 #audit{padding:70px 0 90px}
 .dash-wrap{padding-top:50px}
 
