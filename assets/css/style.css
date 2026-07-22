@@ -806,3 +806,15 @@ footer{background:#0F1226}
 /* cartographie de communautés : plus de drag, curseur normal */
 #globe{cursor:default}
 #globe:active{cursor:default}
+
+/* ---------- use cases : listes de détails + références clients ---------- */
+.case .uc-list{margin-top:16px;list-style:none}
+.case .uc-list li{font-size:.86rem;color:var(--ivoire-60);padding:7px 0 7px 18px;position:relative;border-bottom:1px solid rgba(244,241,232,.07)}
+.case .uc-list li:last-child{border-bottom:none}
+.case .uc-list li::before{content:'◆';position:absolute;left:0;top:9px;font-size:.5rem;color:var(--or)}
+.uc-ex{margin-top:16px;font-size:.8rem;color:var(--ivoire-35)}
+.uc-ex b{color:var(--ivoire-60);font-weight:500}
+.uc-nox{margin-top:16px;font-size:.84rem;color:var(--or)}
+.uc-nox b{font-weight:600}
+.uc-refs{margin-top:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.uc-refs img{height:24px;width:auto;max-width:86px;object-fit:contain}
