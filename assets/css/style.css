@@ -680,61 +680,33 @@ footer{background:#0F1226}
 .dash-wrap{overflow:visible}
 .dash-deco{overflow:hidden}
 
-/* ============ LIQUID GLASS ============
-   Vrai verre : réfraction (filtre SVG #glass-distortion injecté par main.js),
-   flou d'arrière-plan, teinte translucide et arêtes spéculaires.
-   Chaque surface reçoit une couche <i class="lg"> (z:-1) qui porte le
-   backdrop-filter + la distorsion ; la carte garde une teinte navy légère. */
-:root{--r:20px}
-
-/* fond décoratif fixe : donne au verre quelque chose à réfracter */
-body{
-  background:
-    radial-gradient(640px 460px at 85% 6%, rgba(190,167,107,.18), transparent 70%),
-    radial-gradient(760px 560px at 8% 42%, rgba(19,22,45,.12), transparent 70%),
-    radial-gradient(560px 460px at 72% 88%, rgba(190,167,107,.12), transparent 70%),
-    var(--noir);
-  background-attachment:fixed;
-}
-
-.case,.stat,.article,.membre,.map-frame,.feed,.coord,.acard,.audit-cta,
-.dash,.dkpi,.dash-chart,.dash-src,.dash-cta,.tech,.compare,.submenu-inner,.modal,#tooltip{
+/* ============ LIQUID GLASS (pop-ups uniquement) ============
+   Réfraction (filtre SVG #glass-distortion injecté par main.js), flou
+   d'arrière-plan, teinte translucide et arêtes spéculaires — réservé
+   aux modales ; le reste du site garde ses cartes sombres pleines. */
+.modal{
   position:relative;isolation:isolate;
   background:linear-gradient(135deg,rgba(23,27,54,.72),rgba(13,16,34,.62));
   border:1px solid rgba(244,241,232,.18);
-  box-shadow:0 6px 6px rgba(19,22,45,.2),0 0 20px rgba(19,22,45,.1);
+  border-radius:30px;
+  box-shadow:0 40px 90px rgba(19,22,45,.38);
 }
-
-/* couche de verre : flou + réfraction, sous le contenu, au-dessus de la teinte.
-   IMPORTANT : cette couche est distordue par le filtre — elle ne doit porter
-   AUCUN trait net (bordure, reflet), sinon il ressort gribouillé. */
+/* couche de verre : flou + réfraction, sous le contenu — aucun trait net ici */
 .lg{position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
   overflow:hidden;
   backdrop-filter:blur(5px) saturate(150%);
   -webkit-backdrop-filter:blur(5px) saturate(150%);
   filter:url(#glass-distortion);
 }
-/* arêtes spéculaires : calque séparé NON distordu (comme le z-20 du composant
-   de référence), porté par la carte elle-même pour rester net */
+/* arêtes spéculaires : calque séparé non distordu */
 .lg-edge{position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;
   box-shadow:
     inset 2px 2px 1px 0 rgba(255,255,255,.32),
     inset -1px -1px 1px 1px rgba(255,255,255,.16);
 }
-
-.stat,.acard,.dkpi,.dash-chart,.dash-src,.submenu-inner,#tooltip{border-radius:var(--r)}
-.audit-cta,.dash-cta{border-radius:var(--r)}
-.modal{border-radius:30px}
 .modal-back{background:rgba(19,22,45,.32);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .modal .lead-form{position:relative}
-.tech{border-right:1px solid rgba(244,241,232,.18)}
-
-/* rebond élastique façon iOS au survol */
-.case,.article,.tech,.stat,.acard{transition:transform .7s cubic-bezier(.175,.885,.32,2.2),border-color .35s}
-.case:hover,.article:hover,.tech:hover{transform:scale(1.02);border-color:rgba(190,167,107,.6)}
-
-/* navigateurs sans backdrop-filter : fonds pleins, lisibilité d'abord */
+/* navigateurs sans backdrop-filter : fond plein, lisibilité d'abord */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .case,.stat,.article,.membre,.map-frame,.feed,.coord,.acard,.audit-cta,
-  .dash,.dkpi,.dash-chart,.dash-src,.dash-cta,.tech,.compare,.submenu-inner,.modal,#tooltip{background:#13162D}
+  .modal{background:#13162D}
 }

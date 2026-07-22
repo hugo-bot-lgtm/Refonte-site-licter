@@ -631,8 +631,7 @@ addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
     '</filter>';
   document.body.appendChild(svg);
 
-  const GLASS = '.case,.stat,.article,.membre,.map-frame,.feed,.coord,.acard,.audit-cta,' +
-    '.dash,.dkpi,.dash-chart,.dash-src,.dash-cta,.tech,.compare,.submenu-inner,.modal,#tooltip';
+  const GLASS = '.modal';
   document.querySelectorAll(GLASS).forEach(el => {
     const g = document.createElement('i');
     g.className = 'lg';
