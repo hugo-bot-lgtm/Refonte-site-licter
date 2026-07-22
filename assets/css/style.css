@@ -659,7 +659,9 @@ footer{background:#0F1226}
 .dash-select option{background:#171B36;color:#F4F1E8}
 
 /* ---------- section dashboard : décor d'arrière-plan + transition ---------- */
-.dash-wrap{margin-top:-6vh;padding-top:0;padding-bottom:110px;overflow:hidden}
+/* le dashboard suit désormais la section mini-audit : plus de marge négative
+   (elle servait à le glisser sous le hero quand il venait juste après) */
+.dash-wrap{margin-top:0;padding-top:90px;padding-bottom:110px;overflow:hidden}
 .dash-wrap::before{content:'';position:absolute;inset:0;pointer-events:none;
   background-image:radial-gradient(rgba(19,22,45,.16) 1px, transparent 1.4px);
   background-size:26px 26px;
