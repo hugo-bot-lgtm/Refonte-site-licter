@@ -421,39 +421,108 @@ const kpis = document.querySelectorAll('.dkpi b');
 const notes = document.querySelectorAll('.dkpi span');
 const line = document.querySelector('.dash-chart .line');
 const area = document.querySelector('.dash-chart .area');
-const rows = document.querySelectorAll('.dash-src .src');
+const srcList = document.getElementById('src-list');
+const pick = document.querySelector('.dash-pick');
+const panel = document.getElementById('dash-panel');
+const pieSegs = {
+  pos: document.querySelector('.donut .seg.pos'),
+  neu: document.querySelector('.donut .seg.neu'),
+  neg: document.querySelector('.donut .seg.neg')
+};
+const pieCenter = document.getElementById('pie-center');
+const pieLegend = {
+  pos: document.querySelector('[data-p="pos"]'),
+  neu: document.querySelector('[data-p="neu"]'),
+  neg: document.querySelector('[data-p="neg"]')
+};
+const verbQuote = document.getElementById('verb-quote');
 
-/* données par étude (démo) */
+/* logos réseaux (SVG inline, monochromes) */
+const ICONS = {
+  x: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.7 3H21l-7.3 8.3L22.2 21h-6.8l-5.3-6.2L4 21H.8l7.8-8.9L.5 3h7l4.8 5.7L17.7 3zm-1.2 16h1.9L6.9 4.9H4.9L16.5 19z"/></svg>',
+  tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.1 1.8 3.7 4 4v3c-1.6 0-3-.5-4-1.3v6.6c0 3.4-2.6 5.7-5.7 5.7A5.6 5.6 0 0 1 5.2 15c0-3.2 2.6-5.6 5.9-5.5v3.1c-1.6-.2-2.9.9-2.9 2.4 0 1.4 1.1 2.5 2.6 2.5 1.6 0 2.8-1.2 2.8-3V3h3z"/></svg>',
+  instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg>',
+  linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.4 8.4h4.6V23H.4V8.4zm7.6 0h4.4v2h.1c.6-1.2 2.1-2.4 4.4-2.4 4.7 0 5.6 3.1 5.6 7.1V23h-4.6v-6.9c0-1.6 0-3.7-2.3-3.7s-2.6 1.8-2.6 3.6V23H8V8.4z"/></svg>',
+  presse: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M7 9.5h10M7 13h10M7 16.5h6"/></svg>',
+  forums: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a8 8 0 0 1-8 8H4l2.2-2.6A8 8 0 1 1 21 12z"/><path d="M8.5 10.5h7M8.5 13.5h4.5"/></svg>'
+};
+const NAMES = {x:'X / Twitter', tiktok:'TikTok', instagram:'Instagram', linkedin:'LinkedIn', presse:'Presse en ligne', forums:'Forums & avis'};
+
+/* données par étude (démo) — sujets trendy */
 const DATA = {
   '': {t:'VIGIE360 · Salle de veille — démo',
     k:[[48213,''],[68,' %'],[7,'']],
     n:[['up','▲ +12 % vs hier'],['up','▲ +4 pts / 7 j'],['','Délai max : 15 min']],
     curve:[.2,.28,.24,.4,.48,.55,.72,.68],
-    src:[['X / Twitter',78],['TikTok',64],['Presse en ligne',52],['Forums & avis',31]],
-    live:false},
+    src:[['x',78],['tiktok',64],['instagram',52],['linkedin',31]],
+    pie:[68,22,10],
+    verb:[
+      ['x','« Service client au top, réponse en 10 minutes chrono. »','pos'],
+      ['tiktok','« L\'unboxing le plus satisfaisant de l\'année 😍 »','pos'],
+      ['forums','« Quelqu\'un a comparé avec la concurrence ? Je suis mitigé. »','neu']
+    ],
+    live:true},
+  sfr: {t:'Étude · Rachat de SFR — télécoms',
+    k:[[214380,''],[41,' %'],[18,'']],
+    n:[['up','▲ +146 % depuis l\'annonce'],['down','▼ -6 pts / 7 j'],['','Pic : 9 alertes / jour']],
+    curve:[.15,.2,.3,.75,.9,.7,.6,.65],
+    src:[['x',82],['presse',77],['forums',54],['linkedin',43]],
+    pie:[41,38,21],
+    verb:[
+      ['x','« Client SFR depuis 10 ans, j\'espère que le rachat va enfin améliorer le réseau… »','neu'],
+      ['presse','« Le démantèlement de SFR redessine le paysage télécom français. »','neu'],
+      ['forums','« Vers qui migrer si les prix augmentent après le rachat ? »','neg'],
+      ['linkedin','« Consolidation historique pour le secteur : les enjeux d\'infrastructure sont colossaux. »','pos']
+    ],
+    live:true},
+  cdm: {t:'Étude · Coupe du Monde 2026 — ferveur',
+    k:[[612540,''],[74,' %'],[12,'']],
+    n:[['up','▲ record en approche'],['up','▲ +11 pts vs qualifs'],['','15 min tenus, 24/7']],
+    curve:[.2,.3,.42,.5,.62,.7,.82,.95],
+    src:[['x',89],['tiktok',84],['instagram',71],['presse',58]],
+    pie:[74,19,7],
+    verb:[
+      ['x','« On y croit pour 2026, cette génération a tout pour aller au bout 🇫🇷 »','pos'],
+      ['tiktok','« Le montage sur les buts des qualifs : 2M de vues en 24 h. »','pos'],
+      ['instagram','« Les maillots 2026 sont magnifiques, rupture de stock partout. »','pos'],
+      ['forums','« Les horaires des matchs côté US vont être compliqués pour l\'Europe… »','neu']
+    ],
+    live:true},
   shein: {t:'Étude · Shein vs BHV — crise digitale',
     k:[[132480,''],[22,' %'],[31,'']],
     n:[['up','▲ +212 % pendant la crise'],['down','▼ -29 pts en 72 h'],['','Pic : 11 alertes / jour']],
     curve:[.12,.15,.2,.85,.95,.7,.5,.38],
-    src:[['X / Twitter',84],['TikTok',71],['Presse en ligne',66],['Forums & avis',24]],
+    src:[['x',84],['tiktok',71],['presse',66],['forums',24]],
+    pie:[22,34,44],
+    verb:[
+      ['x','« Bravo aux marques qui se retirent du BHV, cohérence avant tout. »','neg'],
+      ['presse','« La polémique enfle autour du partenariat avec le grand magasin parisien. »','neu'],
+      ['forums','« Le BHV qui accueille Shein, je ne comprends plus la stratégie. »','neg']
+    ],
     live:true},
   huda: {t:'Étude · Bad buzz Huda Beauty',
     k:[[96340,''],[18,' %'],[24,'']],
     n:[['up','▲ +164 % en 48 h'],['down','▼ -33 pts au pic'],['','Retour au calme : 9 jours']],
     curve:[.18,.9,.75,.55,.4,.3,.24,.2],
-    src:[['TikTok',88],['X / Twitter',76],['Presse en ligne',41],['Forums & avis',33]],
-    live:true},
-  jo: {t:'Étude · JO 2024 — veille de crise',
-    k:[[458120,''],[61,' %'],[47,'']],
-    n:[['up','▲ record absolu'],['up','▲ +9 pts vs avant-JO'],['','15 min tenu sur 100 % des cas']],
-    curve:[.25,.4,.6,.8,.95,.9,.7,.55],
-    src:[['X / Twitter',91],['Presse en ligne',82],['TikTok',69],['Forums & avis',28]],
+    src:[['tiktok',88],['x',76],['instagram',49],['forums',33]],
+    pie:[18,37,45],
+    verb:[
+      ['tiktok','« La vidéo d\'excuses la plus commentée de la semaine. »','neu'],
+      ['x','« La réponse de la marque arrive trop tard, dommage. »','neg'],
+      ['instagram','« Les stories de créatrices qui prennent leurs distances s\'enchaînent. »','neg']
+    ],
     live:true},
   x: {t:'Étude · Départs de X — migration',
     k:[[74210,''],[54,' %'],[9,'']],
     n:[['up','▲ +38 % sur 30 jours'],['up','▲ sentiment stable'],['','Signal faible confirmé']],
     curve:[.2,.26,.34,.4,.5,.58,.7,.82],
-    src:[['Forums & avis',72],['X / Twitter',66],['Presse en ligne',58],['TikTok',31]],
+    src:[['forums',72],['x',66],['presse',58],['tiktok',31]],
+    pie:[54,31,15],
+    verb:[
+      ['forums','« Migration réussie, toute la communauté a suivi en une semaine. »','pos'],
+      ['x','« Encore un exode annoncé… on verra dans six mois. »','neu'],
+      ['presse','« Les plateformes alternatives enregistrent des inscriptions record. »','pos']
+    ],
     live:true}
 };
 
@@ -475,20 +544,89 @@ function tween(el, to, suf){
     if(p < 1) requestAnimationFrame(tick);
   })(t0);
 }
-sel.addEventListener('change', () => {
-  const d = DATA[sel.value] || DATA[''];
+
+/* camembert : 3 arcs animés (stroke-dasharray sur un cercle r=40) */
+const CIRC = 2 * Math.PI * 40;
+function setPie(p){
+  const [pos, neu, neg] = p;
+  let off = 0;
+  [['pos', pos], ['neu', neu], ['neg', neg]].forEach(([k, v]) => {
+    const seg = pieSegs[k];
+    seg.style.strokeDasharray = (v/100*CIRC) + ' ' + CIRC;
+    seg.style.strokeDashoffset = -off/100*CIRC;
+    off += v;
+    pieLegend[k].textContent = v + ' %';
+  });
+  pieCenter.textContent = pos + ' %';
+}
+
+/* réseaux sociaux : lignes avec logo + part de voix */
+function setSources(src){
+  srcList.innerHTML = src.map(([net, w], i) =>
+    `<div class="src"><span class="s-head"><i class="s-ico">${ICONS[net]}</i>${NAMES[net]}<em>${w} %</em></span><div><i style="--w:${w}%;transition-delay:${.15*i + .3}s"></i></div></div>`
+  ).join('');
+}
+
+/* verbatims : rotation avec animation d'apparition */
+let verbs = [], verbIdx = 0, verbTimer = null;
+function showVerb(){
+  if(!verbs.length) return;
+  const [net, txt, tone] = verbs[verbIdx % verbs.length];
+  verbQuote.querySelector('.v-ico').innerHTML = ICONS[net];
+  verbQuote.querySelector('p').textContent = txt;
+  verbQuote.querySelector('cite').textContent = NAMES[net];
+  verbQuote.className = 'show ' + tone;
+  verbQuote.getBoundingClientRect();
+  verbIdx++;
+}
+function cycleVerb(){
+  verbQuote.className = '';
+  verbQuote.getBoundingClientRect();  /* reflow : relance la transition d'apparition */
+  showVerb();
+}
+function startVerbs(list){
+  verbs = list; verbIdx = 0;
+  clearInterval(verbTimer);
+  cycleVerb();
+  verbTimer = setInterval(() => { if(!document.hidden) cycleVerb(); }, 4500);
+}
+
+function render(d){
   title.textContent = d.t;
   d.k.forEach((kv, i) => tween(kpis[i], kv[0], kv[1]));
   d.n.forEach((nn, i) => { notes[i].className = nn[0]; notes[i].textContent = nn[1]; });
   line.setAttribute('d', makePath(d.curve, false));
   area.setAttribute('d', makePath(d.curve, true));
   [line, area].forEach(p => { p.style.animation = 'none'; p.getBoundingClientRect(); p.style.animation = ''; });
-  d.src.forEach((s, i) => {
-    rows[i].querySelector('span').textContent = s[0];
-    rows[i].querySelector('i').style.setProperty('--w', s[1] + '%');
-  });
+  setSources(d.src);
+  setPie(d.pie);
+  startVerbs(d.verb);
   live.classList.toggle('on', d.live);
+}
+
+sel.addEventListener('change', () => {
+  if(pick) pick.classList.add('used');   /* l'indice disparaît après le 1er clic */
+  render(DATA[sel.value] || DATA['']);
 });
+
+/* premier rendu quand le panneau devient visible (déclenche les animations) */
+const pio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    pio.unobserve(e.target);
+    render(DATA['']);
+  });
+}, {threshold:.3});
+if(panel) pio.observe(panel);
+
+/* la salle de veille vit : les mentions grimpent doucement en continu */
+let liveBase = null;
+setInterval(() => {
+  if(document.hidden || !kpis[0]) return;
+  const cur = parseInt(kpis[0].textContent.replace(/\D/g, '')) || 0;
+  if(cur < 100) return; /* pas encore rendu */
+  tween(kpis[0], cur + 7 + Math.floor(Math.random()*23), '');
+}, 6000);
 })();
 
 /* ================= CAPTURE D'EMAILS (leads) ================= */
