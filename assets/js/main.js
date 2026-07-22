@@ -568,9 +568,20 @@ function tweenNum(el, to, fmt){
     if(p < 1) requestAnimationFrame(tick);
   })(t0);
 }
-function go(){
-  const marque = input.value.trim();
-  if(marque.length < 2){ input.focus(); return; }
+/* phase d'analyse simulée : décompte avant l'affichage des chiffres */
+const load = document.getElementById('audit-load');
+const stepEl = document.getElementById('audit-step');
+const timerEl = document.getElementById('audit-timer');
+const STEPS = [
+  'Interrogation des réseaux sociaux…',
+  'Collecte des mentions…',
+  'Analyse du sentiment…',
+  'Calcul du score de visibilité…'
+];
+const ANALYSE_MS = 5000;
+let running = false;
+
+function reveal(marque){
   const h = hash(marque.toLowerCase());
   const mentions = 2400 + h % 78000;          /* simulation stable par marque */
   const sent = 38 + h % 38;                   /* 38–75 % */
@@ -584,6 +595,34 @@ function go(){
   bSent.style.width = sent + '%';
   bVis.style.width = vis + '%';
   res.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+}
+
+function go(){
+  const marque = input.value.trim();
+  if(marque.length < 2){ input.focus(); return; }
+  if(running) return;
+  running = true;
+  btn.disabled = true;
+  res.classList.remove('on');
+  bSent.style.width = '0';
+  bVis.style.width = '0';
+  stepEl.textContent = STEPS[0];
+  timerEl.textContent = (ANALYSE_MS/1000).toFixed(1).replace('.', ',') + ' s';
+  load.classList.add('on');
+  load.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  const t0 = performance.now();
+  const iv = setInterval(() => {
+    const left = Math.max(0, ANALYSE_MS - (performance.now() - t0));
+    timerEl.textContent = (left/1000).toFixed(1).replace('.', ',') + ' s';
+    stepEl.textContent = STEPS[Math.min(STEPS.length - 1, Math.floor((ANALYSE_MS - left) / (ANALYSE_MS / STEPS.length)))];
+    if(left <= 0){
+      clearInterval(iv);
+      load.classList.remove('on');
+      btn.disabled = false;
+      running = false;
+      reveal(marque);
+    }
+  }, 100);
 }
 btn.addEventListener('click', go);
 input.addEventListener('keydown', e => { if(e.key === 'Enter') go(); });

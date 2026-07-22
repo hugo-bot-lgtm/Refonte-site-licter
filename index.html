@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=1784714395">
+<link rel="stylesheet" href="assets/css/style.css?v=1784719970">
 </head>
 <body>
 <div id="progress"></div>
@@ -45,6 +45,39 @@
     </div>
     </div>
 </header>
+<!-- ============ MINI-AUDIT ============ -->
+<section class="section" id="audit" style="background:var(--bleu)">
+  <div class="wrap">
+    <div class="eyebrow rv">Mini-audit instantané</div>
+    <h2 class="rv d1">Que dit le web de <span class="gold">votre marque</span> ?</h2>
+    <p class="lead rv d2" style="margin-top:26px">Entrez un nom de marque pour une estimation instantanée de sa présence sociale. Démo à chiffres simulés — le rapport complet, lui, est réalisé par nos consultants.</p>
+    <div class="audit-bar rv d2">
+      <input id="audit-input" type="text" placeholder="Nom de votre marque (ou d'un concurrent…)" aria-label="Nom de la marque">
+      <button id="audit-btn" class="btn plein" type="button">Analyser</button>
+    </div>
+    <div id="audit-load" class="audit-load" aria-live="polite">
+      <span class="ring" aria-hidden="true"></span>
+      <span id="audit-step">Interrogation des réseaux sociaux…</span>
+      <b id="audit-timer">5,0 s</b>
+    </div>
+    <div id="audit-res" class="audit-res" aria-live="polite">
+      <div class="audit-cards">
+        <div class="acard"><small>Mentions estimées / mois</small><b data-v="mentions">0</b></div>
+        <div class="acard"><small>Sentiment positif estimé</small><b data-v="sent">0</b><div class="jauge"><i data-b="sent"></i></div></div>
+        <div class="acard"><small>Score de visibilité</small><b data-v="vis">0</b><div class="jauge"><i data-b="vis"></i></div></div>
+      </div>
+      <div class="audit-cta">
+        <p>Le rapport complet de « <span id="audit-nom"></span> » — sources, communautés, signaux faibles — par email sous 24 h :</p>
+        <form class="lead-form" data-source="mini-audit" novalidate>
+          <input type="email" placeholder="Votre email professionnel" aria-label="Votre email professionnel" required>
+          <button type="submit">Recevoir le rapport complet</button>
+        </form>
+        <p class="lead-ok">✓ C'est noté ! Le rapport arrive sous 24 h ouvrées.</p>
+        <p class="lead-note">Sans engagement — désinscription en un clic.</p>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ============ APERÇU VIGIE360 (parallaxe) ============ -->
 <section class="dash-wrap" aria-label="Aperçu de l'interface VIGIE360 — démo">
   <div class="dash-deco" aria-hidden="true">
@@ -109,34 +142,6 @@
 </div>
 
 
-<!-- ============ MINI-AUDIT ============ -->
-<section class="section" id="audit" style="background:var(--bleu)">
-  <div class="wrap">
-    <div class="eyebrow rv">Mini-audit instantané</div>
-    <h2 class="rv d1">Que dit le web de <span class="gold">votre marque</span> ?</h2>
-    <p class="lead rv d2" style="margin-top:26px">Entrez un nom de marque pour une estimation instantanée de sa présence sociale. Démo à chiffres simulés — le rapport complet, lui, est réalisé par nos consultants.</p>
-    <div class="audit-bar rv d2">
-      <input id="audit-input" type="text" placeholder="Nom de votre marque (ou d'un concurrent…)" aria-label="Nom de la marque">
-      <button id="audit-btn" class="btn plein" type="button">Analyser</button>
-    </div>
-    <div id="audit-res" class="audit-res" aria-live="polite">
-      <div class="audit-cards">
-        <div class="acard"><small>Mentions estimées / mois</small><b data-v="mentions">0</b></div>
-        <div class="acard"><small>Sentiment positif estimé</small><b data-v="sent">0</b><div class="jauge"><i data-b="sent"></i></div></div>
-        <div class="acard"><small>Score de visibilité</small><b data-v="vis">0</b><div class="jauge"><i data-b="vis"></i></div></div>
-      </div>
-      <div class="audit-cta">
-        <p>Le rapport complet de « <span id="audit-nom"></span> » — sources, communautés, signaux faibles — par email sous 24 h :</p>
-        <form class="lead-form" data-source="mini-audit" novalidate>
-          <input type="email" placeholder="Votre email professionnel" aria-label="Votre email professionnel" required>
-          <button type="submit">Recevoir le rapport complet</button>
-        </form>
-        <p class="lead-ok">✓ C'est noté ! Le rapport arrive sous 24 h ouvrées.</p>
-        <p class="lead-note">Sans engagement — désinscription en un clic.</p>
-      </div>
-    </div>
-  </div>
-</section>
 <!-- ============ USE CASES ============ -->
 <section class="section" id="usecases">
   <div class="wrap">
@@ -283,6 +288,6 @@
     </div>
   </div>
 </footer>
-<script src="assets/js/main.js?v=1784714395"></script>
+<script src="assets/js/main.js?v=1784719970"></script>
 </body>
 </html>

@@ -710,3 +710,13 @@ footer{background:#0F1226}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
   .modal{background:#13162D}
 }
+
+/* ---------- mini-audit : phase d'analyse simulée ---------- */
+.audit-load{display:none;align-items:center;gap:14px;margin-top:44px;color:var(--ivoire-60);font-size:.92rem}
+.audit-load.on{display:flex;animation:fadeup .5s cubic-bezier(.19,1,.22,1)}
+.audit-load .ring{width:18px;height:18px;border-radius:50%;flex:none;
+  border:2px solid rgba(190,167,107,.25);border-top-color:var(--or);animation:spin-audit .8s linear infinite}
+.audit-load b{font-family:var(--display);font-weight:700;color:var(--or);min-width:48px;text-align:right}
+@keyframes spin-audit{to{transform:rotate(360deg)}}
+.audit-bar .btn[disabled]{opacity:.55;cursor:wait}
+@media(prefers-reduced-motion:reduce){.audit-load .ring{animation:none}}
