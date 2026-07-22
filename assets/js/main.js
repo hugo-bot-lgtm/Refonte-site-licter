@@ -257,133 +257,164 @@ if(form){
 })();
 
 
-/* ================= GLOBE 3D (accueil) ================= */
+/* ================= CARTOGRAPHIE DE COMMUNAUTÉS (accueil) =================
+   Remplace le globe : graphe de communautés façon analyse de réseaux
+   (clusters colorés, ponts entre hubs, impulsions qui circulent). */
 (function(){
 "use strict";
 const cv = document.getElementById('globe');
 if(!cv) return;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ctx = cv.getContext('2d');
-const COLS = 140, ROWS = 64, LAT_TOP = 75, LAT_BOT = -56;
-const D2R = Math.PI / 180;
 
-/* points terrestres -> vecteurs unitaires 3D (1 colonne sur 2 pour la perf) */
-const land = [];
-LICTER_MASK.split(";").forEach((row, ry) => {
-  const bits = BigInt('0x' + row);
-  const lat = (LAT_TOP + (LAT_BOT - LAT_TOP) * (ry + .5) / ROWS) * D2R;
-  for(let cx = 0; cx < COLS; cx += 2){
-    if((bits >> BigInt(cx)) & 1n){
-      const lon = (-180 + 360 * (cx + .5) / COLS) * D2R;
-      land.push({x: Math.cos(lat) * Math.cos(lon), y: Math.sin(lat), z: Math.cos(lat) * Math.sin(lon)});
+/* graine fixe : la carte est stable d'un chargement à l'autre */
+let seed = 42;
+function rnd(){ seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+function gauss(){ return (rnd() + rnd() + rnd() - 1.5) / 1.5; }
+
+/* communautés : offsets (en unités de R) depuis le centre du graphe */
+const COMS = [
+  {ox:-.05, oy:-.52, rx:.46, ry:.34, rot:-.35, n:70, hubs:3, col:[190,167,107]},  /* or */
+  {ox: .62, oy: .08, rx:.52, ry:.46, rot: .5,  n:85, hubs:4, col:[ 62,142,126]},  /* teal */
+  {ox:-.62, oy:-.30, rx:.36, ry:.28, rot: .3,  n:58, hubs:3, col:[201,123, 74]},  /* terracotta */
+  {ox:-.30, oy: .42, rx:.34, ry:.27, rot:-.2,  n:52, hubs:2, col:[ 91,107,168]},  /* bleu ardoise */
+  {ox:-1.02, oy: .92, rx:.24, ry:.20, rot: .2, n:42, hubs:2, col:[ 19, 22, 45]}   /* navy, détaché */
+];
+const BRIDGES = [[0,1],[0,2],[0,3],[3,4],[1,3]];
+
+/* génération des nœuds et liens (positions en unités de R) */
+const nodes = [], edges = [];
+COMS.forEach((c, ci) => {
+  const cosR = Math.cos(c.rot), sinR = Math.sin(c.rot);
+  const first = nodes.length;
+  for(let i = 0; i < c.n; i++){
+    const isHub = i < c.hubs;
+    const gx = gauss() * (isHub ? .3 : 1) * c.rx, gy = gauss() * (isHub ? .3 : 1) * c.ry;
+    nodes.push({
+      ci,
+      bx: c.ox + gx*cosR - gy*sinR,
+      by: c.oy + gx*sinR + gy*cosR,
+      r: isHub ? 3.2 + rnd()*1.8 : .9 + rnd()*1.4,
+      hub: isHub,
+      ph: rnd()*7, sp: .3 + rnd()*.5, amp: .012 + rnd()*.014
+    });
+  }
+  /* liens intra-communauté : chaque nœud -> un hub + un voisin proche */
+  for(let i = first + c.hubs; i < nodes.length; i++){
+    edges.push({a: i, b: first + Math.floor(rnd()*c.hubs), ci, bow: (rnd()-.5)*.5});
+    if(rnd() < .55){
+      let best = -1, bd = 1e9;
+      for(let j = first; j < nodes.length; j++){
+        if(j === i) continue;
+        const dx = nodes[j].bx - nodes[i].bx, dy = nodes[j].by - nodes[i].by, d = dx*dx + dy*dy;
+        if(d < bd){ bd = d; best = j; }
+      }
+      if(best >= 0) edges.push({a: i, b: best, ci, bow: (rnd()-.5)*.5});
     }
   }
 });
-const CITY = [
-  ['Paris', 48.85, 2.35], ['New York', 40.7, -74], ['São Paulo', -23.5, -46.6],
-  ['Lagos', 6.45, 3.4], ['Dubaï', 25.2, 55.3], ['Singapour', 1.35, 103.8],
-  ['Tokyo', 35.7, 139.7], ['Sydney', -33.9, 151.2]
-].map(([n, la, lo]) => ({n, x: Math.cos(la*D2R)*Math.cos(lo*D2R), y: Math.sin(la*D2R), z: Math.cos(la*D2R)*Math.sin(lo*D2R)}));
-const ARCS = [[0,1],[0,6],[1,2],[6,7],[0,4],[5,0],[4,5],[1,3]];
+/* ponts entre communautés (hub -> hub) */
+BRIDGES.forEach(([a, b]) => {
+  const fa = COMS.slice(0, a).reduce((s, c) => s + c.n, 0);
+  const fb = COMS.slice(0, b).reduce((s, c) => s + c.n, 0);
+  edges.push({a: fa, b: fb, ci: a, bow: .35, bridge: true});
+  edges.push({a: fa + 1, b: fb + 1, ci: b, bow: -.3, bridge: true});
+});
 
-function slerp(a, b, t){
-  let d = a.x*b.x + a.y*b.y + a.z*b.z;
-  d = Math.min(1, Math.max(-1, d));
-  const w = Math.acos(d), sw = Math.sin(w) || 1e-6;
-  const ka = Math.sin((1-t)*w)/sw, kb = Math.sin(t*w)/sw;
-  return {x: ka*a.x + kb*b.x, y: ka*a.y + kb*b.y, z: ka*a.z + kb*b.z};
-}
+/* impulsions : petits paquets lumineux qui parcourent des liens */
+const PULSES = Array.from({length: 14}, (_, i) => ({e: Math.floor(rnd()*edges.length), t: rnd(), v: .006 + rnd()*.008}));
 
-let W, H, R, CX, CY, rotY = .6, vel = .0018, drag = false, lastX = 0, mx = 0;
+let W, H, R, CX, CY, mx = 0, my = 0;
 function resize(){
   W = cv.width = cv.offsetWidth * devicePixelRatio;
   H = cv.height = cv.offsetHeight * devicePixelRatio;
-  R = Math.min(W, H) * .44;
-  CX = W * (cv.offsetWidth > 860 ? .72 : .5);
+  R = Math.min(W, H) * .46;
+  CX = W * (cv.offsetWidth > 860 ? .70 : .5);
   CY = H * .5;
 }
 resize(); addEventListener('resize', resize);
-
-cv.addEventListener('mousedown', e => { drag = true; lastX = e.clientX; });
-addEventListener('mouseup', () => drag = false);
 addEventListener('mousemove', e => {
-  if(drag){ rotY += (e.clientX - lastX) * .005; lastX = e.clientX; }
   mx = (e.clientX / innerWidth - .5);
+  my = (e.clientY / innerHeight - .5);
 }, {passive:true});
 
-const TILT = .42, cosT = Math.cos(TILT), sinT = Math.sin(TILT);
-function proj(p){
-  const cy = Math.cos(rotY), sy = Math.sin(rotY);
-  const x1 = p.x*cy + p.z*sy, z1 = -p.x*sy + p.z*cy;
-  const y2 = p.y*cosT - z1*sinT, z2 = p.y*sinT + z1*cosT;
-  const s = 1.4 / (1.4 - z2 * .42);
-  return {sx: CX + x1*R*s, sy: CY - y2*R*s, z: z2, s};
+/* positions écran, recalculées à chaque frame (dérive + parallaxe) */
+const px = new Float32Array(nodes.length), py = new Float32Array(nodes.length);
+function layout(t){
+  const sx = mx * R * .06, sy = my * R * .05;
+  for(let i = 0; i < nodes.length; i++){
+    const n = nodes[i];
+    const drift = reduced ? 0 : 1;
+    px[i] = CX + (n.bx + Math.sin(t*n.sp + n.ph) * n.amp * drift) * R + sx * (n.hub ? 1.25 : 1);
+    py[i] = CY + (n.by + Math.cos(t*n.sp*.9 + n.ph) * n.amp * drift) * R + sy * (n.hub ? 1.25 : 1);
+  }
 }
 
 let t0 = performance.now();
 function draw(now){
   const t = (now - t0) / 1000;
-  if(!drag) rotY += vel + mx * .0012;
+  layout(t);
   ctx.clearRect(0, 0, W, H);
-  /* halo de la planète */
-  const g = ctx.createRadialGradient(CX, CY, R*.55, CX, CY, R*1.25);
-  g.addColorStop(0, 'rgba(19,22,45,.06)');
-  g.addColorStop(1, 'rgba(19,22,45,0)');
-  ctx.fillStyle = g;
-  ctx.fillRect(CX-R*1.3, CY-R*1.3, R*2.6, R*2.6);
-  /* points terrestres */
-  for(const p of land){
-    const q = proj(p);
-    if(q.z < -.25) continue;
-    const a = .12 + .42 * (q.z + 1) / 2;
-    const sz = (q.z > 0 ? 2 : 1.3) * devicePixelRatio * q.s;
-    ctx.fillStyle = `rgba(190,167,107,${a + .1})`;
-    ctx.fillRect(q.sx, q.sy, sz, sz);
-  }
-  /* arcs de données entre capitales */
-  ARCS.forEach((pair, i) => {
-    const A = CITY[pair[0]], B = CITY[pair[1]];
+  ctx.lineWidth = devicePixelRatio * .8;
+
+  /* liens, groupés par communauté (1 tracé par couleur) */
+  COMS.forEach((c, ci) => {
     ctx.beginPath();
-    let visible = false;
-    for(let k = 0; k <= 36; k++){
-      const tt = k / 36;
-      const m = slerp(A, B, tt);
-      const lift = 1 + .22 * Math.sin(Math.PI * tt);
-      const q = proj({x: m.x*lift, y: m.y*lift, z: m.z*lift});
-      if(k === 0) ctx.moveTo(q.sx, q.sy); else ctx.lineTo(q.sx, q.sy);
-      if(q.z > 0) visible = true;
+    for(const e of edges){
+      if(e.ci !== ci) continue;
+      const ax = px[e.a], ay = py[e.a], bx = px[e.b], by = py[e.b];
+      const mxx = (ax+bx)/2 - (by-ay)*e.bow, myy = (ay+by)/2 + (bx-ax)*e.bow;
+      ctx.moveTo(ax, ay);
+      ctx.quadraticCurveTo(mxx, myy, bx, by);
     }
-    if(!visible) return;
-    ctx.strokeStyle = 'rgba(190,167,107,.42)';
-    ctx.lineWidth = devicePixelRatio;
+    ctx.strokeStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.12)`;
     ctx.stroke();
-    /* paquet de données voyageant sur l'arc */
-    const tp = (t * .22 + i * .13) % 1;
-    const m = slerp(A, B, tp);
-    const lift = 1 + .22 * Math.sin(Math.PI * tp);
-    const q = proj({x: m.x*lift, y: m.y*lift, z: m.z*lift});
-    if(q.z > -.05){
+  });
+
+  /* nœuds */
+  COMS.forEach((c, ci) => {
+    ctx.fillStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.75)`;
+    for(let i = 0; i < nodes.length; i++){
+      const n = nodes[i];
+      if(n.ci !== ci || n.hub) continue;
+      const s = n.r * devicePixelRatio;
+      ctx.fillRect(px[i] - s/2, py[i] - s/2, s, s);
+    }
+    /* hubs : cercle plein + halo respirant */
+    for(let i = 0; i < nodes.length; i++){
+      const n = nodes[i];
+      if(n.ci !== ci || !n.hub) continue;
+      const breath = 1 + .18 * Math.sin(t*1.4 + n.ph);
       ctx.beginPath();
-      ctx.arc(q.sx, q.sy, 2.4 * devicePixelRatio * q.s, 0, 7);
-      ctx.fillStyle = '#13162D';
+      ctx.arc(px[i], py[i], n.r * 2.6 * devicePixelRatio * breath, 0, 7);
+      ctx.fillStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.12)`;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(px[i], py[i], n.r * devicePixelRatio, 0, 7);
+      ctx.fillStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.9)`;
       ctx.fill();
     }
   });
-  /* capitales : pulsations dorées */
-  CITY.forEach((c, i) => {
-    const q = proj(c);
-    if(q.z < .05) return;
-    const phase = (t * .8 + i * .4) % 1;
-    ctx.beginPath();
-    ctx.arc(q.sx, q.sy, (4 + phase * 16) * devicePixelRatio * q.s, 0, 7);
-    ctx.strokeStyle = `rgba(19,22,45,${.55 * (1 - phase)})`;
-    ctx.lineWidth = devicePixelRatio;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(q.sx, q.sy, 2.6 * devicePixelRatio * q.s, 0, 7);
-    ctx.fillStyle = '#BEA76B';
-    ctx.fill();
-  });
+
+  /* impulsions le long des liens */
+  if(!reduced){
+    for(const p of PULSES){
+      p.t += p.v;
+      if(p.t >= 1){ p.t = 0; p.e = Math.floor(Math.random()*edges.length); }
+      const e = edges[p.e], c = COMS[e.ci].col;
+      const ax = px[e.a], ay = py[e.a], bx = px[e.b], by = py[e.b];
+      const mxx = (ax+bx)/2 - (by-ay)*e.bow, myy = (ay+by)/2 + (bx-ax)*e.bow;
+      const u = p.t, v = 1 - u;
+      const qx = v*v*ax + 2*v*u*mxx + u*u*bx;
+      const qy = v*v*ay + 2*v*u*myy + u*u*by;
+      const a = Math.sin(Math.PI * p.t);
+      ctx.beginPath();
+      ctx.arc(qx, qy, 2 * devicePixelRatio, 0, 7);
+      ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${.85 * a})`;
+      ctx.fill();
+    }
+  }
+
   if(!reduced) requestAnimationFrame(draw);
 }
 requestAnimationFrame(draw);

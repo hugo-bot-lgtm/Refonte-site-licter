@@ -798,3 +798,7 @@ footer{background:#0F1226}
 }
 .dash-pick{margin-left:auto}
 .dash-pick .dash-select{margin-left:0}
+
+/* cartographie de communautés : plus de drag, curseur normal */
+#globe{cursor:default}
+#globe:active{cursor:default}
