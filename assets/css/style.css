@@ -722,3 +722,7 @@ footer{background:#0F1226}
 @keyframes spin-audit{to{transform:rotate(360deg)}}
 .audit-bar .btn[disabled]{opacity:.55;cursor:wait}
 @media(prefers-reduced-motion:reduce){.audit-load .ring{animation:none}}
+
+/* ---------- bandeau clients : logos entre les noms ---------- */
+.marquee-track .mq-logo{display:flex;align-items:center}
+.marquee-track .mq-logo img{height:30px;width:auto;max-width:120px;object-fit:contain;display:block}
