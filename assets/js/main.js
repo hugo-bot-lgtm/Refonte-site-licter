@@ -627,7 +627,7 @@ addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
         '<fePointLight x="-200" y="-200" z="300"/>' +
       '</feSpecularLighting>' +
       '<feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"/>' +
-      '<feDisplacementMap in="SourceGraphic" in2="softMap" scale="140" xChannelSelector="R" yChannelSelector="G"/>' +
+      '<feDisplacementMap in="SourceGraphic" in2="softMap" scale="90" xChannelSelector="R" yChannelSelector="G"/>' +
     '</filter>';
   document.body.appendChild(svg);
 
@@ -637,6 +637,9 @@ addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
     const g = document.createElement('i');
     g.className = 'lg';
     g.setAttribute('aria-hidden', 'true');
-    el.prepend(g);
+    const e = document.createElement('i');
+    e.className = 'lg-edge';
+    e.setAttribute('aria-hidden', 'true');
+    el.prepend(g, e);
   });
 })();
