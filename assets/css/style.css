@@ -680,62 +680,57 @@ footer{background:#0F1226}
 .dash-wrap{overflow:visible}
 .dash-deco{overflow:hidden}
 
-/* ---------- Liquid Glass (pop-ups) ---------- */
-.modal-back{background:rgba(19,22,45,.32);backdrop-filter:blur(14px) saturate(130%);-webkit-backdrop-filter:blur(14px) saturate(130%)}
-.modal{
-  background:linear-gradient(135deg,rgba(23,27,54,.6),rgba(13,16,34,.48));
-  backdrop-filter:blur(30px) saturate(180%);
-  -webkit-backdrop-filter:blur(30px) saturate(180%);
-  border:1px solid rgba(244,241,232,.18);
-  border-radius:30px;
-  box-shadow:
-    0 40px 90px rgba(19,22,45,.38),
-    inset 0 1px 0 rgba(255,255,255,.28),
-    inset 0 -1px 0 rgba(255,255,255,.05),
-    inset 0 0 34px rgba(255,255,255,.04);
-}
-.modal::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+/* ============ LIQUID GLASS ============
+   Vrai verre : réfraction (filtre SVG #glass-distortion injecté par main.js),
+   flou d'arrière-plan, teinte translucide et arêtes spéculaires.
+   Chaque surface reçoit une couche <i class="lg"> (z:-1) qui porte le
+   backdrop-filter + la distorsion ; la carte garde une teinte navy légère. */
+:root{--r:20px}
+
+/* fond décoratif fixe : donne au verre quelque chose à réfracter */
+body{
   background:
-    radial-gradient(120% 70% at 18% 0%,rgba(255,255,255,.14),transparent 55%),
-    radial-gradient(90% 60% at 100% 100%,rgba(190,167,107,.12),transparent 60%);
-}
-.modal .lead-form{position:relative}
-/* navigateurs sans backdrop-filter : on garde le fond plein d'origine */
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .modal{background:#13162D}
+    radial-gradient(640px 460px at 85% 6%, rgba(190,167,107,.18), transparent 70%),
+    radial-gradient(760px 560px at 8% 42%, rgba(19,22,45,.12), transparent 70%),
+    radial-gradient(560px 460px at 72% 88%, rgba(190,167,107,.12), transparent 70%),
+    var(--noir);
+  background-attachment:fixed;
 }
 
-/* ---------- Liquid Glass généralisé (cartes sombres) ----------
-   Le vrai backdrop-filter est réservé aux surfaces flottantes (modal,
-   sous-menus, tooltip) : appliqué à 40+ cartes il sature le compositing.
-   Les cartes obtiennent le même rendu par translucidité + reflets. */
-:root{--r:20px}
 .case,.stat,.article,.membre,.map-frame,.feed,.coord,.acard,.audit-cta,
-.dash,.dkpi,.dash-chart,.dash-src,.dash-cta,.tech,.compare,.submenu-inner,#tooltip{
-  background:linear-gradient(135deg,rgba(23,27,54,.88),rgba(13,16,34,.8));
-  border:1px solid rgba(244,241,232,.16);
-  box-shadow:
-    0 16px 40px rgba(19,22,45,.18),
-    inset 0 1px 0 rgba(255,255,255,.22),
-    inset 0 -1px 0 rgba(255,255,255,.04),
-    inset 0 0 26px rgba(255,255,255,.035);
-}
-.submenu-inner,#tooltip{
+.dash,.dkpi,.dash-chart,.dash-src,.dash-cta,.tech,.compare,.submenu-inner,.modal,#tooltip{
+  position:relative;isolation:isolate;
   background:linear-gradient(135deg,rgba(23,27,54,.72),rgba(13,16,34,.62));
-  backdrop-filter:blur(18px) saturate(160%);
-  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid rgba(244,241,232,.18);
+  box-shadow:0 6px 6px rgba(19,22,45,.2),0 0 20px rgba(19,22,45,.1);
 }
+
+/* couche de verre : flou + réfraction, sous le contenu, au-dessus de la teinte */
+.lg{position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+  backdrop-filter:blur(5px) saturate(150%);
+  -webkit-backdrop-filter:blur(5px) saturate(150%);
+  filter:url(#glass-distortion);
+}
+/* arêtes spéculaires : la lumière qui accroche le bord du verre */
+.lg::after{content:"";position:absolute;inset:0;border-radius:inherit;
+  box-shadow:
+    inset 2px 2px 1px 0 rgba(255,255,255,.4),
+    inset -1px -1px 1px 1px rgba(255,255,255,.22);
+}
+
 .stat,.acard,.dkpi,.dash-chart,.dash-src,.submenu-inner,#tooltip{border-radius:var(--r)}
 .audit-cta,.dash-cta{border-radius:var(--r)}
-/* reflet supérieur légèrement plus marqué sur les grandes cartes */
-.case:hover,.article:hover,.tech:hover{
-  background:linear-gradient(135deg,rgba(31,36,68,.9),rgba(17,20,42,.82));
-  border-color:rgba(190,167,107,.55);
-}
-/* la grille technos gardait des séparateurs internes : on les adoucit */
-.tech{border-right:1px solid rgba(244,241,232,.16)}
-/* navigateurs sans backdrop-filter : fonds pleins d'origine */
+.modal{border-radius:30px}
+.modal-back{background:rgba(19,22,45,.32);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.modal .lead-form{position:relative}
+.tech{border-right:1px solid rgba(244,241,232,.18)}
+
+/* rebond élastique façon iOS au survol */
+.case,.article,.tech,.stat,.acard{transition:transform .7s cubic-bezier(.175,.885,.32,2.2),border-color .35s}
+.case:hover,.article:hover,.tech:hover{transform:scale(1.02);border-color:rgba(190,167,107,.6)}
+
+/* navigateurs sans backdrop-filter : fonds pleins, lisibilité d'abord */
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .submenu-inner,#tooltip{background:#13162D}
+  .case,.stat,.article,.membre,.map-frame,.feed,.coord,.acard,.audit-cta,
+  .dash,.dkpi,.dash-chart,.dash-src,.dash-cta,.tech,.compare,.submenu-inner,.modal,#tooltip{background:#13162D}
 }
