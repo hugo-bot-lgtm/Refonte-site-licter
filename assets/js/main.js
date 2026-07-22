@@ -274,11 +274,11 @@ function gauss(){ return (rnd() + rnd() + rnd() - 1.5) / 1.5; }
 
 /* communautés : offsets (en unités de R) depuis le centre du graphe */
 const COMS = [
-  {ox:-.05, oy:-.52, rx:.46, ry:.34, rot:-.35, n:70, hubs:3, col:[190,167,107]},  /* or */
-  {ox: .62, oy: .08, rx:.52, ry:.46, rot: .5,  n:85, hubs:4, col:[ 62,142,126]},  /* teal */
-  {ox:-.62, oy:-.30, rx:.36, ry:.28, rot: .3,  n:58, hubs:3, col:[201,123, 74]},  /* terracotta */
-  {ox:-.30, oy: .42, rx:.34, ry:.27, rot:-.2,  n:52, hubs:2, col:[ 91,107,168]},  /* bleu ardoise */
-  {ox:-1.02, oy: .92, rx:.24, ry:.20, rot: .2, n:42, hubs:2, col:[ 19, 22, 45]}   /* navy, détaché */
+  {ox:-.05, oy:-.48, rx:.46, ry:.34, rot:-.35, n:92,  hubs:3, col:[176,148,78]},  /* or */
+  {ox: .56, oy: .08, rx:.52, ry:.46, rot: .5,  n:112, hubs:4, col:[ 43,138,117]}, /* teal */
+  {ox:-.62, oy:-.28, rx:.36, ry:.28, rot: .3,  n:74,  hubs:3, col:[205,110, 60]}, /* terracotta */
+  {ox:-.30, oy: .42, rx:.34, ry:.27, rot:-.2,  n:66,  hubs:2, col:[ 80, 98,178]}, /* bleu ardoise */
+  {ox:-.95, oy: .80, rx:.24, ry:.20, rot: .2,  n:52,  hubs:2, col:[ 19, 22, 45]}  /* navy, détaché */
 ];
 const BRIDGES = [[0,1],[0,2],[0,3],[3,4],[1,3]];
 
@@ -294,7 +294,7 @@ COMS.forEach((c, ci) => {
       ci,
       bx: c.ox + gx*cosR - gy*sinR,
       by: c.oy + gx*sinR + gy*cosR,
-      r: isHub ? 3.2 + rnd()*1.8 : .9 + rnd()*1.4,
+      r: isHub ? 4.4 + rnd()*2.2 : 1.3 + rnd()*1.8,
       hub: isHub,
       ph: rnd()*7, sp: .3 + rnd()*.5, amp: .012 + rnd()*.014
     });
@@ -302,7 +302,7 @@ COMS.forEach((c, ci) => {
   /* liens intra-communauté : chaque nœud -> un hub + un voisin proche */
   for(let i = first + c.hubs; i < nodes.length; i++){
     edges.push({a: i, b: first + Math.floor(rnd()*c.hubs), ci, bow: (rnd()-.5)*.5});
-    if(rnd() < .55){
+    if(rnd() < .8){
       let best = -1, bd = 1e9;
       for(let j = first; j < nodes.length; j++){
         if(j === i) continue;
@@ -328,9 +328,9 @@ let W, H, R, CX, CY, mx = 0, my = 0;
 function resize(){
   W = cv.width = cv.offsetWidth * devicePixelRatio;
   H = cv.height = cv.offsetHeight * devicePixelRatio;
-  R = Math.min(W, H) * .46;
-  CX = W * (cv.offsetWidth > 860 ? .70 : .5);
-  CY = H * .5;
+  R = Math.min(W * .30, H * .58);
+  CX = W * (cv.offsetWidth > 860 ? .69 : .5);
+  CY = H * .52;
 }
 resize(); addEventListener('resize', resize);
 addEventListener('mousemove', e => {
@@ -355,7 +355,7 @@ function draw(now){
   const t = (now - t0) / 1000;
   layout(t);
   ctx.clearRect(0, 0, W, H);
-  ctx.lineWidth = devicePixelRatio * .8;
+  ctx.lineWidth = devicePixelRatio * 1.1;
 
   /* liens, groupés par communauté (1 tracé par couleur) */
   COMS.forEach((c, ci) => {
@@ -367,13 +367,13 @@ function draw(now){
       ctx.moveTo(ax, ay);
       ctx.quadraticCurveTo(mxx, myy, bx, by);
     }
-    ctx.strokeStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.12)`;
+    ctx.strokeStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.26)`;
     ctx.stroke();
   });
 
   /* nœuds */
   COMS.forEach((c, ci) => {
-    ctx.fillStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.75)`;
+    ctx.fillStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.88)`;
     for(let i = 0; i < nodes.length; i++){
       const n = nodes[i];
       if(n.ci !== ci || n.hub) continue;
@@ -387,7 +387,7 @@ function draw(now){
       const breath = 1 + .18 * Math.sin(t*1.4 + n.ph);
       ctx.beginPath();
       ctx.arc(px[i], py[i], n.r * 2.6 * devicePixelRatio * breath, 0, 7);
-      ctx.fillStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.12)`;
+      ctx.fillStyle = `rgba(${c.col[0]},${c.col[1]},${c.col[2]},.16)`;
       ctx.fill();
       ctx.beginPath();
       ctx.arc(px[i], py[i], n.r * devicePixelRatio, 0, 7);
@@ -409,8 +409,8 @@ function draw(now){
       const qy = v*v*ay + 2*v*u*myy + u*u*by;
       const a = Math.sin(Math.PI * p.t);
       ctx.beginPath();
-      ctx.arc(qx, qy, 2 * devicePixelRatio, 0, 7);
-      ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${.85 * a})`;
+      ctx.arc(qx, qy, 2.6 * devicePixelRatio, 0, 7);
+      ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${.9 * a})`;
       ctx.fill();
     }
   }
