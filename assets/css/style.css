@@ -737,12 +737,14 @@ footer{background:#0F1226}
 /* --- affordance : on comprend qu'on peut changer d'étude --- */
 .dash-pick{position:relative;display:inline-flex;align-items:center}
 .dash-pick .dash-select{cursor:pointer}
-.pick-tip{position:absolute;top:calc(100% + 9px);right:0;white-space:nowrap;z-index:6;
+.pick-tip{white-space:nowrap;margin-right:12px;order:-1;
   font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--or);
-  background:rgba(19,22,45,.92);border:1px solid rgba(190,167,107,.45);border-radius:100px;
+  background:rgba(190,167,107,.08);border:1px solid rgba(190,167,107,.45);border-radius:100px;
   padding:6px 13px;pointer-events:none;animation:tip-bounce 1.6s ease-in-out infinite}
+.pick-tip::after{content:' →'}
 .dash-pick.used .pick-tip{display:none}
-@keyframes tip-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+@keyframes tip-bounce{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@media(max-width:820px){.pick-tip{display:none}}
 
 /* --- grille : courbe + camembert + réseaux --- */
 .dash-main{grid-template-columns:1.35fr .9fr 1fr}
