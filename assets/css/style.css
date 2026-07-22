@@ -818,3 +818,5 @@ footer{background:#0F1226}
 .uc-nox b{font-weight:600}
 .uc-refs{margin-top:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .uc-refs img{height:24px;width:auto;max-width:86px;object-fit:contain}
+/* bandeau logos seuls : un peu plus grands sans les noms */
+.marquee-track .mq-logo img{height:34px;max-width:130px}
