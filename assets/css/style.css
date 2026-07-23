@@ -823,3 +823,15 @@ footer{background:#0F1226}
 
 /* cartes vidéo cliquables (liens YouTube) */
 a.video{display:block}
+
+/* ---------- cartes vidéo format YouTube (miniature 16:9 + texte dessous) ---------- */
+.video.yt{aspect-ratio:auto;padding:0;justify-content:flex-start;background:#13162D}
+.video.yt .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;flex:none}
+.video.yt .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.video.yt .bg::after{content:none}
+.video.yt .play{top:50%;transform:translate(-50%,-50%);width:58px;height:58px}
+.video.yt .play::after{border-left-width:12px;border-top-width:8px;border-bottom-width:8px}
+.video.yt .duree{top:auto;bottom:12px;right:12px;background:rgba(0,0,0,.7);border-color:transparent;color:#fff}
+.video.yt .vmeta{padding:20px 22px 24px}
+.video.yt .vmeta small{margin-bottom:8px}
+.video.yt .vmeta h3{font-size:1.02rem}
